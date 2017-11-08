@@ -1,5 +1,5 @@
- def InTheRange(interval,insertInterval):
-        newInterval = [0,0]
+def InTheRange(interval,insertInterval):
+    newInterval = [0,0]
     if(all(item>= interval[0] and item<= interval[1] for item in insertInterval )):
         newInterval = interval
     elif(insertInterval[0]< interval[0] and insertInterval[1]> interval[1]):
