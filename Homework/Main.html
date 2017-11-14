@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rakuten Homework</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="Functions.js"></script>
+  <style>
+  button {
+    margin:5;
+  }
+  </style>
+</head>
+<body onload="Showtable()" >
+<div class="container">
+  <h2>Rakuten Homework</h2>           
+  <table class="table table-striped" id="myTable">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id ="datasRow"></tbody>
+  </table>
+  <button onclick = "ShowForm(this)" value = "insertForm">Insert</button>
+  <br><br>
+
+  <div id = "showForm" >
+    <form id = "insertForm" method="post" style = "display : none;"> 
+      <label for="name">Name: </label><br>
+      <input type="text" id="name" value="">
+      <br>
+      <label for="phone">Phone: </label><br>
+      <input type="text" id="phone" value="">
+      <br>
+      <label for="email">E-Mail: </label><br>
+      <input type="text" id="email" value="">
+      <br><br>
+      <input type="submit" value="Submit" onclick="InsertData()">
+      <input type="reset" value="Reset">
+    </form> 
+
+    <form id = "modifyForm" method="post" style = "display : none;"> 
+      <p hidden id ="index"></p>
+      <label for="name">Name: </label><br>
+      <input type="text" id="name" value="">
+      <br>
+      <label for="phone">Phone: </label><br>
+      <input type="text" id="phone" value="">
+      <br>
+      <label for="email">E-Mail: </label><br>
+      <input type="text" id="email" value="">
+      <br><br>
+      <input type="submit" value="Save" onclick="ModifyData(this)">
+      <input type="submit" value="Cancel" onclick="ModifyData(this)">
+    </form>
+  </div>
+</div>
+</body>
+</html>
+​
+
