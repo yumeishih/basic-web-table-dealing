@@ -5,58 +5,51 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="Functions.js"></script>
-  <style>
-  button {
-    margin:5;
-  }
-  </style>
 </head>
 <body onload="Showtable()" >
 <div class="container">
-  <h2>Rakuten Homework</h2>           
+  <img src="ec-img-1.png" alt="Rakuten">           
   <table class="table table-striped" id="myTable">
     <thead>
       <tr>
         <th>No.</th>
         <th>Name</th>
         <th>Phone</th>
-        <th>Email</th>
+        <th>Email<span style = "color:red;">*</span></th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody id ="datasRow"></tbody>
   </table>
-  <button onclick = "ShowForm(this)" value = "insertForm">Insert</button>
-  <br><br>
-
-  <div id = "showForm" >
+  <button class="btn btn-sm" onclick = "ShowForm(this)" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
+  <br>
+  <div id = "showForm" class="col-sm-4">
     <form id = "insertForm" method="post" style = "display : none;"> 
-      <label for="name">Name: </label><br>
-      <input type="text" id="name" value="">
+      <h3>Insert</h3>
+      <p id = "insertFormErrorMsg"></p>
+      <label for="name">Name: </label>
+      <input type="text" class="form-control" id="name" value="">
+      <label for="phone">Phone: </label>
+      <input type="text" class="form-control" id="phone" value="">
+      <label for="email"><span style = "color:red;">*</span>Email: </label>
+      <input type="text" class="form-control" id="email" value="">
       <br>
-      <label for="phone">Phone: </label><br>
-      <input type="text" id="phone" value="">
-      <br>
-      <label for="email">E-Mail: </label><br>
-      <input type="text" id="email" value="">
-      <br><br>
-      <input type="submit" value="Submit" onclick="InsertData()">
-      <input type="reset" value="Reset">
+      <button type="button" class="btn btn-default btn-sm" onclick="InsertData()">Submit</button>
+      <button type="reset" class="btn btn-default btn-sm">Reset</button>
     </form> 
 
     <form id = "modifyForm" method="post" style = "display : none;"> 
-      <p hidden id ="index"></p>
-      <label for="name">Name: </label><br>
-      <input type="text" id="name" value="">
+      <h3>Modify</h3>
+      <p id = "modifyFormErrorMsg"></p>
+      <label for="name">Name: </label>
+      <input type="text" class="form-control" id="name" value="">
+      <label for="phone">Phone: </label>
+      <input type="text" class="form-control" id="phone" value="">
+      <label for="email"><span style = "color:red;">*</span>Email: </label>
+      <input type="text" class="form-control" id="email" value="">
       <br>
-      <label for="phone">Phone: </label><br>
-      <input type="text" id="phone" value="">
-      <br>
-      <label for="email">E-Mail: </label><br>
-      <input type="text" id="email" value="">
-      <br><br>
-      <input type="submit" value="Save" onclick="ModifyData(this)">
-      <input type="submit" value="Cancel" onclick="ModifyData(this)">
+      <button type="button" class="btn btn-default btn-sm" onclick="ModifyData(this)">Save</button>
+      <button type="submit" class="btn btn-default btn-sm" onclick="ModifyData(this)">Cancel</button>
     </form>
   </div>
 </div>

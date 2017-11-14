@@ -1,49 +1,97 @@
+var storageName = "RakutenDatas";
+var attributes = ["name","phone","email"];
+var attributesCount = attributes.length;
+
 function InsertData()
 {
-    if (localStorage.getItem("RakutenDatas") === null) {
+    var formName = "insertForm";
+    if (localStorage.getItem(storageName) === null) {
         var datas = new Array();
-        localStorage["RakutenDatas"] = JSON.stringify(datas);
+        localStorage[storageName] = JSON.stringify(datas);
     }
-    var datas = JSON.parse(localStorage["RakutenDatas"]);
-    var dataCount = datas.length;
-    datas[dataCount] = new Array();
-    datas[dataCount][0] = document.forms["insertForm"]["name"].value;
-    datas[dataCount][1] = document.forms["insertForm"]["phone"].value;
-    datas[dataCount][2] = document.forms["insertForm"]["email"].value;
-    localStorage["RakutenDatas"] = JSON.stringify(datas);
-};
+    if(_IsValidate(formName))
+    {
+        var datas = JSON.parse(localStorage[storageName]);
+        var dataCount = datas.length; 
+        _Setdatas(dataCount,formName);
+        window.location.reload(); 
+    }
+}
 
 function DeleteData(index)
 {
-    var datas = JSON.parse(localStorage["RakutenDatas"]);
+    var datas = JSON.parse(localStorage[storageName]);
     datas.splice(index, 1);
-    localStorage["RakutenDatas"] = JSON.stringify(datas);
+    localStorage[storageName] = JSON.stringify(datas);
     Showtable();
-};
+}
 
 function ModifyData(action)
 {
-    if (action.value =="Cancel");
+   var formName = "modifyForm"
+    if (action.innerHTML =="Cancel");
     else{
-        var datas = JSON.parse(localStorage["RakutenDatas"]);
-        index = document.getElementById("modifyForm").value;
-        datas[index][0] = document.forms["modifyForm"]["name"].value;
-        datas[index][1] = document.forms["modifyForm"]["phone"].value;
-        datas[index][2] = document.forms["modifyForm"]["email"].value;
-        localStorage["RakutenDatas"] = JSON.stringify(datas);
+        index = document.getElementById(formName).value;
+        if(_IsValidate(formName,index)){
+            _Setdatas(index,formName);
+            window.location.reload(); 
+        }
     }
+}
+
+function _IsValidate(formName,index)
+{
+    var name = document.forms[formName]["name"].value;
+    var email =  document.forms[formName]["email"].value;
+    if(name===null||name===""){
+        alert("Name can not be empty!");
+        return false;
+    }
+    else{
+        var datas = JSON.parse(localStorage[storageName]);
+        var len = datas.length;
+        for(i=0;i<len;i++)
+        {
+            if(i==index) continue;
+            if(name == datas[i][0]){
+                alert("User already exist!");
+                return false;
+            }
+        }
+    }
+    if(email===null||email===""){
+        alert("Email can not be empty!");
+        return false;
+    }   
+    return true;
+}
+
+function _Setdatas(index,formName)
+{
+    var datas = JSON.parse(localStorage[storageName]);
+    if(index == datas.length) datas[index] = new Array();
+    for(i=0;i<attributesCount;i++)
+    {
+        datas[index][i] = document.forms[formName][attributes[i]].value;
+    }
+    localStorage[storageName] = JSON.stringify(datas);
 }
 function ShowForm(formName,index)
 {
-    var form = document.getElementById(formName.value);
-    form.style.display = "block";
+    var form = document.getElementById(formName.value); 
     if (formName.value == "modifyForm")
     {
-        var datas = JSON.parse(localStorage["RakutenDatas"]);
-        form["name"].value = datas[index][0];
-        form["phone"].value = datas[index][1];
-        form["email"].value = datas[index][2];
+        form.style.display = "block";
+        var datas = JSON.parse(localStorage[storageName]);
+        for(i=0;i<attributesCount;i++)
+        {
+            form[attributes[i]].value = datas[index][i];
+        }
         form.value = index;
+    }
+    else{
+        if(form.style.display == "block") form.style.display = "none";
+        else form.style.display = "block";
     }
 }
 
@@ -51,11 +99,11 @@ function Showtable()
 {
     var htmlString = "";
     var actionString1 = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"DeleteData(";
-    var actionString2 = ")\">Delete</button><button class=\"btn btn-default btn-xs\" onclick = \"ShowForm(this,";
-    var actionString3 = ")\" value = \"modifyForm\">Modify</button>";
-    if (localStorage.getItem("RakutenDatas") === null);
+    var actionString2 = ")\"><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button class=\"btn btn-default btn-xs\" onclick = \"ShowForm(this,";
+    var actionString3 = ")\" value = \"modifyForm\"><span class=\"glyphicon glyphicon-pencil\"></span> Modify</button>";
+    if (localStorage.getItem(storageName) === null);
     else{
-        var datas = JSON.parse(localStorage["RakutenDatas"]);
+        var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length;
         var cellCount = 0
         if (dataCount !=0) cellCount = datas[0].length;      
