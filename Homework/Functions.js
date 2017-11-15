@@ -42,6 +42,7 @@ function ModifyData(action)
 function _IsValidate(formName,index)
 {
     var name = document.forms[formName]["name"].value;
+    var phone = document.forms[formName]["phone"].value;
     var email =  document.forms[formName]["email"].value;
     if(name===null||name===""){
         alert("Name can not be empty!");
@@ -62,8 +63,30 @@ function _IsValidate(formName,index)
     if(email===null||email===""){
         alert("Email can not be empty!");
         return false;
-    }   
+    }
+    if(!_IsValidFormat("name",name)) {
+        alert("Wrong Name Format!");
+        return false;
+    } 
+    else if(!_IsValidFormat("phone",phone)) {
+        alert("Wrong Phone Format!");
+        return false;
+    }
+   else  if(!_IsValidFormat("email",email)) {
+        alert("Wrong Email Format!");
+        return false;
+    }
     return true;
+}
+
+function _IsValidFormat(attributeName,attributeValue)
+{
+    var reg = {
+        "name":/^/,
+        "phone":/^[0-9]*$/,
+        "email":/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/
+    }
+    return reg[attributeName].test(attributeValue);
 }
 
 function _Setdatas(index,formName)
@@ -76,6 +99,7 @@ function _Setdatas(index,formName)
     }
     localStorage[storageName] = JSON.stringify(datas);
 }
+
 function ShowForm(formName,index)
 {
     var form = document.getElementById(formName.value); 
