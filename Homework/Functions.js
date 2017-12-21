@@ -1,45 +1,48 @@
 var storageName = "RakutenDatas";
 var attributes = ["name","phone","email"];
 var attributesCount = attributes.length;
+var Functions = new Functions();
 
-function InsertData()
+function Functions() {
+
+this.InsertData = function()
 {
     var formName = "insertForm";
     if (localStorage.getItem(storageName) === null) {
         var datas = new Array();
         localStorage[storageName] = JSON.stringify(datas);
     }
-    if(_IsValidate(formName))
+    if(this._IsValidate(formName))
     {
         var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length; 
-        _Setdatas(dataCount,formName);
+        this._Setdatas(dataCount,formName);
         window.location.reload(); 
     }
 }
 
-function DeleteData(index)
+this.DeleteData = function(index)
 {
     var datas = JSON.parse(localStorage[storageName]);
     datas.splice(index, 1);
     localStorage[storageName] = JSON.stringify(datas);
-    Showtable();
+    this.Showtable();
 }
 
-function ModifyData(action)
+this.ModifyData = function(action)
 {
    var formName = "modifyForm"
     if (action.innerHTML =="Cancel");
     else{
         index = document.getElementById(formName).value;
-        if(_IsValidate(formName,index)){
-            _Setdatas(index,formName);
+        if(this._IsValidate(formName,index)){
+            this._Setdatas(index,formName);
             window.location.reload(); 
         }
     }
 }
 
-function _IsValidate(formName,index)
+this._IsValidate = function(formName,index)
 {
     var name = document.forms[formName]["name"].value;
     var phone = document.forms[formName]["phone"].value;
@@ -64,22 +67,22 @@ function _IsValidate(formName,index)
         alert("Email can not be empty!");
         return false;
     }
-    if(!_IsValidFormat("name",name)) {
+    if(!this._IsValidFormat("name",name)) {
         alert("Wrong Name Format!");
         return false;
     } 
-    else if(!_IsValidFormat("phone",phone)) {
+    else if(!this._IsValidFormat("phone",phone)) {
         alert("Wrong Phone Format!");
         return false;
     }
-   else  if(!_IsValidFormat("email",email)) {
+   else  if(!this._IsValidFormat("email",email)) {
         alert("Wrong Email Format!");
         return false;
     }
     return true;
 }
 
-function _IsValidFormat(attributeName,attributeValue)
+this._IsValidFormat = function(attributeName,attributeValue)
 {
     var reg = {
         "name":/^/,
@@ -89,7 +92,7 @@ function _IsValidFormat(attributeName,attributeValue)
     return reg[attributeName].test(attributeValue);
 }
 
-function _Setdatas(index,formName)
+this._Setdatas = function(index,formName)
 {
     var datas = JSON.parse(localStorage[storageName]);
     if(index == datas.length) datas[index] = new Array();
@@ -100,7 +103,7 @@ function _Setdatas(index,formName)
     localStorage[storageName] = JSON.stringify(datas);
 }
 
-function ShowForm(formName,index)
+this.ShowForm = function(formName,index)
 {
     var form = document.getElementById(formName.value); 
     if (formName.value == "modifyForm")
@@ -119,11 +122,11 @@ function ShowForm(formName,index)
     }
 }
 
-function Showtable()
+this.Showtable = function()
 {
     var htmlString = "";
-    var actionString1 = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"DeleteData(";
-    var actionString2 = ")\"><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button class=\"btn btn-default btn-xs\" onclick = \"ShowForm(this,";
+    var actionString1 = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"Functions.DeleteData(";
+    var actionString2 = ")\"><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button class=\"btn btn-default btn-xs\" onclick = \"Functions.ShowForm(this,";
     var actionString3 = ")\" value = \"modifyForm\"><span class=\"glyphicon glyphicon-pencil\"></span> Modify</button>";
     if (localStorage.getItem(storageName) === null);
     else{
@@ -140,4 +143,6 @@ function Showtable()
         }
         document.getElementById("datasRow").innerHTML = htmlString;
     }
+}
+
 }

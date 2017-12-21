@@ -4,9 +4,9 @@
   <title>Rakuten Homework</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="Functions.js"></script>
+  <script src="src/Functions.js"></script>
 </head>
-<body onload="Showtable()" >
+<body onload="Functions.Showtable()" >
 <div class="container">
   <img src="ec-img-1.png" alt="Rakuten">           
   <table class="table table-striped" id="myTable">
@@ -21,7 +21,7 @@
     </thead>
     <tbody id ="datasRow"></tbody>
   </table>
-  <button class="btn btn-sm" onclick = "ShowForm(this)" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
+  <button class="btn btn-sm" onclick = "Functions.ShowForm(this)" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
   <br>
   <div id = "showForm" class="col-sm-4">
     <form id = "insertForm" method="post" style = "display:none;"> 
@@ -34,7 +34,7 @@
       <label for="text"><span style = "color:red;">*</span>Email: </label>
       <input type="email" class="form-control" id="email" value="">
       <br>
-      <button type="button" class="btn btn-default btn-sm" onclick="InsertData()">Submit</button>
+      <button type="button" class="btn btn-default btn-sm" onclick="Functions.InsertData()">Submit</button>
       <button type="reset" class="btn btn-default btn-sm">Reset</button>
     </form> 
 
@@ -48,8 +48,8 @@
       <label for="email"><span style = "color:red;">*</span>Email: </label>
       <input type="text" class="form-control" id="email" value="">
       <br>
-      <button type="button" class="btn btn-default btn-sm" onclick="ModifyData(this)">Save</button>
-      <button type="submit" class="btn btn-default btn-sm" onclick="ModifyData(this)">Cancel</button>
+      <button type="button" class="btn btn-default btn-sm" onclick="Functions.ModifyData(this)">Save</button>
+      <button type="submit" class="btn btn-default btn-sm" onclick="Functions.ModifyData(this)">Cancel</button>
     </form>
   </div>
 </div>
