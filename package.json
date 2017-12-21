@@ -1,0 +1,19 @@
+{
+  "name": "rakuten",
+  "version": "1.0.0",
+  "description": "Pratice",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yumeishih/Rakuten.git"
+  },
+  "author": "yumi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yumeishih/Rakuten/issues"
+  },
+  "homepage": "https://github.com/yumeishih/Rakuten#readme"
+}
