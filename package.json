@@ -4,7 +4,7 @@
   "description": "Pratice",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jasmine "
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/yumeishih/Rakuten/issues"
   },
-  "homepage": "https://github.com/yumeishih/Rakuten#readme"
+  "homepage": "https://github.com/yumeishih/Rakuten#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0"
+  }
 }
