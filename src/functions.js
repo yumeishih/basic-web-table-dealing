@@ -46,10 +46,13 @@ Functions.prototype.ModifyData = function(action)
 
 Functions.prototype._IsValidate = function(formName,index)
 {
-    var name = document.forms[formName]["name"].value;
-    var phone = document.forms[formName]["phone"].value;
-    var email =  document.forms[formName]["email"].value;
-    if(name===null||name===""){
+    var formContent = 
+    {
+        "name":document.forms[formName]["name"].value,
+        "phone":document.forms[formName]["phone"].value,
+        "email":document.forms[formName]["email"].value
+    }
+    if(formContent["name"]===null||formContent["name"]===""){
         alert("Name can not be empty!");
         return false;
     }
@@ -59,39 +62,34 @@ Functions.prototype._IsValidate = function(formName,index)
         for(var i=0;i<len;i++)
         {
             if(i==index) continue;
-            if(name == datas[i][0]){
+            if(formContent["name"] == datas[i][0]){
                 alert("User already exist!");
                 return false;
             }
         }
     }
-    if(email===null||email===""){
+    if(formContent["email"]===null||formContent["email"]===""){
         alert("Email can not be empty!");
         return false;
     }
-    if(!this._IsValidFormat("name",name)) {
-        alert("Wrong Name Format!");
-        return false;
-    } 
-    else if(!this._IsValidFormat("phone",phone)) {
-        alert("Wrong Phone Format!");
-        return false;
-    }
-   else  if(!this._IsValidFormat("email",email)) {
-        alert("Wrong Email Format!");
-        return false;
-    }
-    return true;
+    return this._IsValidFormat(formContent)
 };
 
-Functions.prototype._IsValidFormat = function(attributeName,attributeValue)
+Functions.prototype._IsValidFormat = function(formContent)
 {
     var reg = {
         "name":/^/,
         "phone":/^[0-9]*$/,
         "email":/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/
     }
-    return reg[attributeName].test(attributeValue);
+    for(var key in formContent)
+    {
+        if(!reg[key].test(formContent[key])) {
+            alert("Wrong "+ key +" Format!");
+            return false;
+        }
+    }
+    return true;
 };
 
 Functions.prototype._Setdatas = function(index,formName)

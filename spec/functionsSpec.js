@@ -1,7 +1,9 @@
-var FunctionsSource = require('../src/functions.js');
-var Functions = new FunctionsSource();
+
+import Functions from '../src/functions.js'
+var Function = new Functions();
+
 describe('Functions',function(){
     it('testing',function(){
-        expect(Functions.testing()).toBeTruthy();
+        expect(Function.testing()).toBeTruthy();
     });
 });
