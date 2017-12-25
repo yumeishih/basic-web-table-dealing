@@ -1,5 +1,4 @@
-
-import Functions from '../src/functions.js'
+var Functions = require('../src/functions.js');
 var Function = new Functions();
 
 describe('Functions',function(){

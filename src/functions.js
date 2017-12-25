@@ -150,10 +150,11 @@ Functions.prototype.Showtable = function()
     }
 };
 
+var window;
 Functions.prototype.testing =function()
 {
-    console.log("hello world! from functions");
+    console.log("Hello world from functions!");
     return true;
 };
-
-export default Functions;
+ 
+if(typeof window == "undefined") module.exports = Functions;
