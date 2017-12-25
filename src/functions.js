@@ -53,7 +53,7 @@ Functions.prototype._IsValidate = function(formName,index)
         "email":document.forms[formName]["email"].value
     }
     if(formContent["name"]===null||formContent["name"]===""){
-        alert("Name can not be empty!");
+        alert(NAME_EMPTY_ALERT);
         return false;
     }
     else{
@@ -63,13 +63,13 @@ Functions.prototype._IsValidate = function(formName,index)
         {
             if(i==index) continue;
             if(formContent["name"] == datas[i][0]){
-                alert("User already exist!");
+                alert(USER_EXIST_ALERT);
                 return false;
             }
         }
     }
     if(formContent["email"]===null||formContent["email"]===""){
-        alert("Email can not be empty!");
+        alert(EMAIL_EMPTY_ALERT);
         return false;
     }
     return this._IsValidFormat(formContent)
@@ -85,7 +85,7 @@ Functions.prototype._IsValidFormat = function(formContent)
     for(var key in formContent)
     {
         if(!reg[key].test(formContent[key])) {
-            alert("Wrong "+ key +" Format!");
+            alert(WRONG_FORMAT + key);
             return false;
         }
     }
@@ -110,7 +110,6 @@ Functions.prototype.ShowForm = function(formName)
     {
         var index = formName.value; 
         var form = document.getElementById("modifyForm");
-        console.log(form);
         form.style.display = "block";
         var datas = JSON.parse(localStorage[this.storageName]);
         for(var i=0;i<this.attributesCount;i++)
@@ -118,7 +117,6 @@ Functions.prototype.ShowForm = function(formName)
             form[this.attributes[i]].value = datas[index][i];
         }
         form.value = index;
-        console.log(index);
     }
     else{
         var form = document.getElementById(formName.value);

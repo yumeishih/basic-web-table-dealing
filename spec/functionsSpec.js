@@ -1,8 +1,9 @@
 var Functions = require('../src/functions.js');
 var Function = new Functions();
 
-describe('Functions',function(){
+describe('Functions Testing',function(){
     it('testing',function(){
         expect(Function.testing()).toBeTruthy();
     });
 });
+
