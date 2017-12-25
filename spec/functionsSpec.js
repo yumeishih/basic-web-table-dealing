@@ -1,11 +1,7 @@
-var Functions = require('../src/functions.js');
-
+var FunctionsSource = require('../src/functions.js');
+var Functions = new FunctionsSource();
 describe('Functions',function(){
-    var functions;
-    beforeEach(function() {
-        functions = new Functions();
-    });
     it('testing',function(){
-        expect(functions.testing()).toBeTruthy();
+        expect(Functions.testing()).toBeTruthy();
     });
 });

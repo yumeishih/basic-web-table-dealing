@@ -23,6 +23,7 @@ Functions.prototype.InsertData = function()
 
 Functions.prototype.DeleteData = function(index)
 {
+    console.log(index);
     var datas = JSON.parse(localStorage[this.storageName]);
     datas.splice(index, 1);
     localStorage[this.storageName] = JSON.stringify(datas);
@@ -32,9 +33,10 @@ Functions.prototype.DeleteData = function(index)
 Functions.prototype.ModifyData = function(action)
 {
    var formName = "modifyForm"
-    if (action.innerHTML =="Cancel");
+   console.log(action.innerHTML);
+    if (action.innerHTML == "Cancel") window.location.reload(); 
     else{
-        index = document.getElementById(formName).value;
+        var index = document.getElementById(formName).value;
         if(this._IsValidate(formName,index)){
             this._Setdatas(index,formName);
             window.location.reload(); 
@@ -54,7 +56,7 @@ Functions.prototype._IsValidate = function(formName,index)
     else{
         var datas = JSON.parse(localStorage[this.storageName]);
         var len = datas.length;
-        for(i=0;i<len;i++)
+        for(var i=0;i<len;i++)
         {
             if(i==index) continue;
             if(name == datas[i][0]){
@@ -96,27 +98,32 @@ Functions.prototype._Setdatas = function(index,formName)
 {
     var datas = JSON.parse(localStorage[this.storageName]);
     if(index == datas.length) datas[index] = new Array();
-    for(i=0;i<this.attributesCount;i++)
+    for(var i=0;i<this.attributesCount;i++)
     {
         datas[index][i] = document.forms[formName][this.attributes[i]].value;
     }
     localStorage[this.storageName] = JSON.stringify(datas);
 };
 
-Functions.prototype.ShowForm = function(formName,index)
+Functions.prototype.ShowForm = function(formName)
 {
-    var form = document.getElementById(formName.value); 
-    if (formName.value == "modifyForm")
+
+    if(formName.id=="showModifyForm")
     {
+        var index = formName.value; 
+        var form = document.getElementById("modifyForm");
+        console.log(form);
         form.style.display = "block";
         var datas = JSON.parse(localStorage[this.storageName]);
-        for(i=0;i<this.attributesCount;i++)
+        for(var i=0;i<this.attributesCount;i++)
         {
             form[this.attributes[i]].value = datas[index][i];
         }
         form.value = index;
+        console.log(index);
     }
     else{
+        var form = document.getElementById(formName.value);
         if(form.style.display == "block") form.style.display = "none";
         else form.style.display = "block";
     }
@@ -125,18 +132,18 @@ Functions.prototype.ShowForm = function(formName,index)
 Functions.prototype.Showtable = function()
 {
     var htmlString = "";
-    var actionString1 = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"Functions.DeleteData(";
-    var actionString2 = ")\"><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button class=\"btn btn-default btn-xs\" onclick = \"Functions.ShowForm(this,";
-    var actionString3 = ")\" value = \"modifyForm\"><span class=\"glyphicon glyphicon-pencil\"></span> Modify</button>";
+    var actionString1 = "<button type=\"button\" class=\"deleteDataClass btn btn-default btn-xs\" value=";
+    var actionString2 = "><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button id=\"showModifyForm\" class=\"showFormClass btn btn-default btn-xs\" value =";
+    var actionString3 = "><span class=\"glyphicon glyphicon-pencil\"></span> Modify</button>";
     if (localStorage.getItem(this.storageName) === null);
     else{
         var datas = JSON.parse(localStorage[this.storageName]);
         var dataCount = datas.length;
         var cellCount = 0
         if (dataCount !=0) cellCount = datas[0].length;      
-        for(i=0;i<dataCount;i++){
+        for( var i=0;i<dataCount;i++){
             htmlString = htmlString +"<tr id=\"data"+i+"\"><td>" + (i+1) + "</td>";
-            for(j=0;j < 3 ; j++){
+            for(var j=0;j < 3 ; j++){
                 htmlString = htmlString + "<td>"+datas[i][j] + "</td>";
             }
             htmlString = htmlString + "<td>"+actionString1+i+actionString2+i+actionString3+ "</td></tr>";
@@ -151,5 +158,4 @@ Functions.prototype.testing =function()
     return true;
 };
 
-module.exports = Functions;
-//var Functions = new FunctionsSource();
+export default Functions;
