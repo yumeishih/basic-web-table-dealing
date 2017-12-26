@@ -53,7 +53,7 @@ Functions.prototype._IsValidate = function(formName,index)
         "email":document.forms[formName]["email"].value
     }
     if(formContent["name"]===null||formContent["name"]===""){
-        alert(NAME_EMPTY_ALERT);
+        this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
     }
     else{
@@ -63,13 +63,13 @@ Functions.prototype._IsValidate = function(formName,index)
         {
             if(i==index) continue;
             if(formContent["name"] == datas[i][0]){
-                alert(USER_EXIST_ALERT);
+                this.alertMsg(1); //USER_EXIST_ALERT
                 return false;
             }
         }
     }
     if(formContent["email"]===null||formContent["email"]===""){
-        alert(EMAIL_EMPTY_ALERT);
+        this.alertMsg(2); //EMAIL_EMPTY_ALERT
         return false;
     }
     return this._IsValidFormat(formContent)
@@ -85,7 +85,7 @@ Functions.prototype._IsValidFormat = function(formContent)
     for(var key in formContent)
     {
         if(!reg[key].test(formContent[key])) {
-            alert(WRONG_FORMAT + key);
+            this.alertMsg(3,key); //WRONG_FORMAT
             return false;
         }
     }
@@ -154,5 +154,11 @@ Functions.prototype.testing =function()
     console.log("Hello world from functions!");
     return true;
 };
+
+Functions.prototype.alertMsg = function(msgIndex,key="")
+{
+    alert(alertMsg[Object.keys(alertMsg)[msgIndex]]+key);
+}
+
  
 if(typeof window == "undefined") module.exports = Functions;
