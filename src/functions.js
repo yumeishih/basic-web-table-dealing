@@ -23,7 +23,8 @@ Functions.prototype.InsertData = function()
         var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length; 
         this._Setdatas(dataCount,formName);
-        window.location.reload(); 
+        this._AppendData(dataCount,formName);
+
     }
 };
 
@@ -51,10 +52,8 @@ Functions.prototype.ModifyData = function(action) {
 
 Functions.prototype._IsValidate = function(formName,index)
 {
-    var formContent = contentField
-; 
-    for(var k in contentField
-){
+    var formContent = contentField; 
+    for(var k in contentField){
         formContent[k] = document.forms[formName][k].value;
     }
     if(formContent.name===null||formContent.name===""){
@@ -83,7 +82,7 @@ Functions.prototype._IsValidate = function(formName,index)
 Functions.prototype._IsValidFormat = function(formContent)
 {
     var reg = {
-        name:/^\Ｓ/,
+        name:/^/,
         phone:/^[0-9]*$/,
         email:/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/
     }
@@ -101,27 +100,65 @@ Functions.prototype._Setdatas = function(index,formName)
 {
     var datas = JSON.parse(localStorage[storageName]);
     
-    if(index === datas.length) datas[index] = contentField
-;
-    for(var k in contentField
-)
+    if(index === datas.length) datas[index] = contentField;
+    for(var k in contentField)
     {
         datas[index][k] = document.forms[formName][k].value;
     }
     localStorage[storageName] = JSON.stringify(datas);
 };
+Functions.prototype._AppendData = function(index,formName){
+    var tableRow = document.createElement("tr");
+    tableRow.id = "data" + index;
+    var tableIndex =  document.createElement("td");
+    tableIndex.innerHTML = index+1;
+    tableRow.appendChild(tableIndex);
+    for(var k in contentField){
+        var tableField = document.createElement("td");
+        tableField.innerHTML = document.forms[formName][k].value;
+        tableRow.appendChild(tableField);
+    }
+    var tableField = document.createElement("td");
+    //Delete Button
+    var deleteButton = document.createElement("button");
+    deleteButton.type="button";
+    deleteButton.classList .add("deleteDataClass","btn","btn-default","btn-xs");
+    deleteButton.value = index;
+    var deleteSpan = document.createElement("span");
+    deleteSpan.classList.add("glyphicon","glyphicon-trash");
+    var deleteText = document.createTextNode("Delete");
+    deleteButton.appendChild(deleteSpan);
+    deleteButton.appendChild(deleteText);
+    tableField.appendChild(deleteButton);
+    tableField.innerHTML += "&nbsp;";
+    //Modify Button
+    var modifyButton = document.createElement("button");
+    modifyButton.id="showModifyForm";
+    modifyButton.classList .add("showFormClass","btn","btn-default","btn-xs");
+    modifyButton.value = index;
+    var modifySpan = document.createElement("span");
+    modifySpan.classList.add("glyphicon","glyphicon-pencil");
+    var modifyText = document.createTextNode("Modify");
+    modifyButton.appendChild(modifySpan);
+    modifyButton.appendChild(modifyText);
+    tableField.appendChild(modifyButton);
+    tableRow.appendChild(tableField);
+    var parent = document.getElementById("datasRow");
+    parent.appendChild(tableRow);
+
+    //reset form
+    document.getElementById(formName).reset();
+}
 
 Functions.prototype.ShowForm = function(formName)
 {
-
     if(formName.id === "showModifyForm")
     {
         var index = formName.value; 
         var form = document.getElementById("modifyForm");
         form.style.display = "block";
         var datas = JSON.parse(localStorage[storageName]);
-        for(var k in contentField
-    )
+        for(var k in contentField)
         {
             form[k].value = datas[index][k];
         }
@@ -146,8 +183,7 @@ Functions.prototype.Showtable = function()
         var dataCount = datas.length; 
         for( var i=0;i<dataCount;i++){
             htmlString = htmlString +"<tr id=\"data"+i+"\"><td>" + (i+1) + "</td>";
-            for(var k in contentField
-        ){
+            for(var k in contentField){
                 htmlString = htmlString + "<td>"+ datas[i][k] + "</td>";
             }
             htmlString = htmlString + "<td>"+actionString1+i+actionString2+i+actionString3+ "</td></tr>";
