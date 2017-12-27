@@ -83,7 +83,7 @@ Functions.prototype._IsValidate = function(formName,index)
 Functions.prototype._IsValidFormat = function(formContent)
 {
     var reg = {
-        name:/^/,
+        name:/^\Ｓ/,
         phone:/^[0-9]*$/,
         email:/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/
     }
