@@ -36,11 +36,10 @@ Functions.prototype.DeleteData = function(index)
     window.location.reload();
 };
 
-Functions.prototype.ModifyData = function(action)
-{
+Functions.prototype.ModifyData = function(action) {
    var formName = "modifyForm"
    console.log(action.innerHTML);
-    if (action.innerHTML == "Cancel") window.location.reload(); 
+    if (action.innerHTML === "Cancel") window.location.reload(); 
     else{
         var index = document.getElementById(formName).value;
         if(this._IsValidate(formName,index)){
@@ -52,11 +51,10 @@ Functions.prototype.ModifyData = function(action)
 
 Functions.prototype._IsValidate = function(formName,index)
 {
-    var formContent = dataStructure;
+    var formContent = dataStructure; 
     for(var k in dataStructure){
         formContent[k] = document.forms[formName][k].value;
     }
-    debugger;
     if(formContent.name===null||formContent.name===""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
@@ -66,14 +64,14 @@ Functions.prototype._IsValidate = function(formName,index)
         var len = datas.length;
         for(var i=0;i<len;i++)
         {
-            if(i==index) continue;
-            if(formContent.name == datas[i].name){
+            if(i === parseInt(index)) continue; 
+            if(formContent.name === datas[i].name){
                 this.alertMsg(1); //USER_EXIST_ALERT
                 return false;
             }
         }
     }
-    if(formContent.email==null||formContent.email===""){
+    if(formContent.email === null||formContent.email === ""){
         this.alertMsg(2); //EMAIL_EMPTY_ALERT
         return false;
     }
@@ -101,10 +99,9 @@ Functions.prototype._Setdatas = function(index,formName)
 {
     var datas = JSON.parse(localStorage[storageName]);
     
-    if(index == datas.length) datas[index] = dataStructure;
+    if(index === datas.length) datas[index] = dataStructure;
     for(var k in dataStructure)
     {
-        debugger;
         datas[index][k] = document.forms[formName][k].value;
     }
     localStorage[storageName] = JSON.stringify(datas);
@@ -113,7 +110,7 @@ Functions.prototype._Setdatas = function(index,formName)
 Functions.prototype.ShowForm = function(formName)
 {
 
-    if(formName.id=="showModifyForm")
+    if(formName.id === "showModifyForm")
     {
         var index = formName.value; 
         var form = document.getElementById("modifyForm");
@@ -127,7 +124,7 @@ Functions.prototype.ShowForm = function(formName)
     }
     else{
         var form = document.getElementById(formName.value);
-        if(form.style.display == "block") form.style.display = "none";
+        if(form.style.display === "block") form.style.display = "none";
         else form.style.display = "block";
     }
 };
@@ -141,8 +138,7 @@ Functions.prototype.Showtable = function()
     if (localStorage.getItem(storageName) === null);
     else{
         var datas = JSON.parse(localStorage[storageName]);
-        var dataCount = datas.length;
-        debugger;    
+        var dataCount = datas.length; 
         for( var i=0;i<dataCount;i++){
             htmlString = htmlString +"<tr id=\"data"+i+"\"><td>" + (i+1) + "</td>";
             for(var k in dataStructure){
@@ -167,4 +163,4 @@ Functions.prototype.alertMsg = function(msgIndex,key="")
 }
 
  
-if(typeof window == "undefined") module.exports = Functions;
+if(typeof window === "undefined") module.exports = Functions;
