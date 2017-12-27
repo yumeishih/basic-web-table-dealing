@@ -1,10 +1,10 @@
 var storageName = 'RakutenDatas';
-var dataStructure = {
+var contentField = {
     name:'',
     phone:'',
     email:''
 };
-var formAttributesCount = Object.keys(dataStructure).length;
+var formAttributesCount = Object.keys(contentField).length;
 
 
 
@@ -51,8 +51,10 @@ Functions.prototype.ModifyData = function(action) {
 
 Functions.prototype._IsValidate = function(formName,index)
 {
-    var formContent = dataStructure; 
-    for(var k in dataStructure){
+    var formContent = contentField
+; 
+    for(var k in contentField
+){
         formContent[k] = document.forms[formName][k].value;
     }
     if(formContent.name===null||formContent.name===""){
@@ -99,8 +101,10 @@ Functions.prototype._Setdatas = function(index,formName)
 {
     var datas = JSON.parse(localStorage[storageName]);
     
-    if(index === datas.length) datas[index] = dataStructure;
-    for(var k in dataStructure)
+    if(index === datas.length) datas[index] = contentField
+;
+    for(var k in contentField
+)
     {
         datas[index][k] = document.forms[formName][k].value;
     }
@@ -116,7 +120,8 @@ Functions.prototype.ShowForm = function(formName)
         var form = document.getElementById("modifyForm");
         form.style.display = "block";
         var datas = JSON.parse(localStorage[storageName]);
-        for(var k in dataStructure)
+        for(var k in contentField
+    )
         {
             form[k].value = datas[index][k];
         }
@@ -141,7 +146,8 @@ Functions.prototype.Showtable = function()
         var dataCount = datas.length; 
         for( var i=0;i<dataCount;i++){
             htmlString = htmlString +"<tr id=\"data"+i+"\"><td>" + (i+1) + "</td>";
-            for(var k in dataStructure){
+            for(var k in contentField
+        ){
                 htmlString = htmlString + "<td>"+ datas[i][k] + "</td>";
             }
             htmlString = htmlString + "<td>"+actionString1+i+actionString2+i+actionString3+ "</td></tr>";
