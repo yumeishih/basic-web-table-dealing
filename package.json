@@ -4,7 +4,8 @@
   "description": "Pratice",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine "
+    "test": "jasmine ",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
