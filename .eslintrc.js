@@ -21,5 +21,7 @@ module.exports = {
 
         // disable rules from base configurations
         "no-console": "off",
+        "curly": ["error", "multi"],
+        "object-curly-spacing":["error", "always"],
     }
 };

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jasmine ",
     "start": "node server.js",
-    "eslint": "eslint src"
+    "eslint": "eslint src",
+    "eslint-fix":"eslint --fix src"
   },
   "repository": {
     "type": "git",
