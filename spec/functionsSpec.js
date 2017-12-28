@@ -9,13 +9,21 @@ describe('Functions Testing',function(){
 
 describe('_IsValidFormat',function(){
     var fakeForm;
+    var datas;
     beforeEach(function(){
         fakeForm = {
-            "name": "kiki",
-            "phone": "0900000000",
-            "email": "kiki@mail.com" 
+            name: "kiki",
+            phone: "0900000000",
+            email: "kiki@mail.com" 
         }
         spyOn(Function,"alertMsg");
+    });
+    it('success',function(){
+        expect(Function._IsValidFormat(fakeForm)).toBeTruthy();
+    });
+    it('name format error',function(){
+        fakeForm.name = "      "; 
+        expect(Function._IsValidFormat(fakeForm)).toBeFalsy();
     });
     it('phone format error',function(){
         fakeForm.phone = "aaaaaaa";  

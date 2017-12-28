@@ -56,7 +56,7 @@ Functions.prototype._IsValidate = function(formName,index)
     for(var k in contentField){
         formContent[k] = document.forms[formName][k].value;
     }
-    if(formContent.name===null||formContent.name===""){
+    if(formContent.name === null|| formContent.name ===""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
     }
@@ -127,14 +127,14 @@ Functions.prototype._AppendData = function(index,formName){
     var deleteSpan = document.createElement("span");
     deleteSpan.classList.add("glyphicon","glyphicon-trash");
     var deleteText = document.createTextNode("Delete");
-    deleteButton.appendChild(deleteSpan);
-    deleteButton.appendChild(deleteText);
+    deleteButton.appendChild(deleteSpan).appendChild(deleteText);
+    // deleteButton.appendChild(deleteText);
     tableField.appendChild(deleteButton);
     tableField.innerHTML += "&nbsp;";
     //Modify Button
     var modifyButton = document.createElement("button");
     modifyButton.id="showModifyForm";
-    modifyButton.classList .add("showFormClass","btn","btn-default","btn-xs");
+    modifyButton.classList.add("showFormClass","btn","btn-default","btn-xs");
     modifyButton.value = index;
     var modifySpan = document.createElement("span");
     modifySpan.classList.add("glyphicon","glyphicon-pencil");
