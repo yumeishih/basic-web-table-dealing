@@ -1,10 +1,9 @@
 var Function = new Functions();
 window.onload = Function.Showtable();
-var showFormClassItems = document.getElementsByClassName("showFormClass");
-for(var i=0;i<showFormClassItems.length;i++){
-    showFormClassItems[i].addEventListener("click", function(){
-        Function.ShowForm(this);});
-}
+
+document.getElementById("showInsertForm").addEventListener("click", function(){
+    Function.ShowInsertForm(this);
+});
 
 document.getElementById("insertData").addEventListener("click", function(){
     Function.InsertData(this);

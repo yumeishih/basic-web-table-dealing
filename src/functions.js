@@ -154,7 +154,7 @@ Functions.prototype._CreateButton = function(index){
     modifyButton.id="showModifyForm";
     modifyButton.classList.add("showFormClass","btn","btn-default","btn-xs");
     modifyButton.value = index;
-    modifyButton.addEventListener("click", function(){ Function.ShowForm(this);});
+    modifyButton.addEventListener("click", function(){ Function.ShowModifyForm(this.value);});
     var modifySpan = document.createElement("span");
     modifySpan.classList.add("glyphicon","glyphicon-pencil");
     var modifyText = document.createTextNode("Modify");
@@ -164,30 +164,27 @@ Functions.prototype._CreateButton = function(index){
     return tableField;
 }
 
-Functions.prototype.ShowForm = function(formName)
-{
-    if(formName.id === "showModifyForm")
+Functions.prototype.ShowModifyForm = function(index){
+    var form = document.getElementById("modifyForm");
+    form.style.display = "block";
+    if(document.getElementById("insertForm").style.display === "block") document.getElementById("insertForm").style.display = "none";
+    var datas = JSON.parse(localStorage[storageName]);
+    for(var k in contentField)
     {
-        var index = formName.value; 
-        var form = document.getElementById("modifyForm");
+        form[k].value = datas[index][k];
+    }
+    form.value = index;
+}
+
+Functions.prototype.ShowInsertForm = function()
+{
+    var form = document.getElementById("insertForm");
+    if(form.style.display === "block") form.style.display = "none";
+    else {
+        if(document.getElementById("modifyForm").style.display === "block") document.getElementById("modifyForm").style.display = "none";
         form.style.display = "block";
-        if(document.getElementById("insertForm").style.display === "block") document.getElementById("insertForm").style.display = "none";
-        var datas = JSON.parse(localStorage[storageName]);
-        for(var k in contentField)
-        {
-            form[k].value = datas[index][k];
-        }
-        form.value = index;
     }
-    else{
-        var form = document.getElementById(formName.value);
-        if(form.style.display === "block") form.style.display = "none";
-        else {
-            if(document.getElementById("modifyForm").style.display === "block") document.getElementById("modifyForm").style.display = "none";
-            form.style.display = "block";
-        }
-    }
-};
+}
 
 Functions.prototype.Showtable = function()
 {
