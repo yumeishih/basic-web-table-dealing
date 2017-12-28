@@ -14,17 +14,20 @@ function Functions(){
 Functions.prototype.InsertData = function()
 {
     var formName = "insertForm";
+    var formContent = contentField; 
+    this._getFormContent(formName,formContent);
     if (localStorage.getItem(storageName) === null) {
         var datas = [];
         localStorage[storageName] = JSON.stringify(datas);
     }
-    if(this._IsValidate(formName))
+    if(this._IsValidate(formContent))
     {
         var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length; 
-        this._Setdatas(dataCount,formName);
-        this._AppendData(dataCount,formName);
-
+        this._Setdatas(dataCount,formContent);
+        this._AppendData(dataCount,formContent);
+        //reset form
+        document.getElementById(formName).reset();
     }
 };
 
@@ -38,23 +41,32 @@ Functions.prototype.DeleteData = function(index)
 
 Functions.prototype.ModifyData = function(action) {
    var formName = "modifyForm"
+   var formContent = contentField; 
+    this._getFormContent(formName,formContent);
    console.log(action.innerHTML);
     if (action.innerHTML === "Cancel") window.location.reload(); 
     else{
         var index = document.getElementById(formName).value;
-        if(this._IsValidate(formName,index)){
-            this._Setdatas(index,formName);
+        if(this._IsValidate(formContent,index)){
+            this._Setdatas(index,formContent);
             window.location.reload(); 
         }
     }
 };
 
-Functions.prototype._IsValidate = function(formName,index)
+Functions.prototype._getFormContent = function(formName,formContent)
 {
-    var formContent = contentField; 
     for(var k in contentField){
         formContent[k] = document.forms[formName][k].value;
     }
+}
+
+Functions.prototype._IsValidate = function(formContent,index)
+{
+    /*var formContent = contentField;
+    for(var k in contentField){
+        formContent[k] = document.forms[formName][k].value;
+    }*/
     if(formContent.name === null||formContent.name===""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
@@ -95,34 +107,37 @@ Functions.prototype._IsValidFormat = function(formContent)
     return true;
 };
 
-Functions.prototype._Setdatas = function(index,formName)
+Functions.prototype._Setdatas = function(index,formContent)
 {
     var datas = JSON.parse(localStorage[storageName]);
-    
     if(index === datas.length) datas[index] = contentField;
     for(var k in contentField)
     {
-        datas[index][k] = document.forms[formName][k].value;
+        datas[index][k] = formContent[k];
     }
     localStorage[storageName] = JSON.stringify(datas);
 };
-Functions.prototype._AppendData = function(index,formName){
+Functions.prototype._AppendData = function(index,formContent){
     var tableRow = document.createElement("tr");
     tableRow.id = "data" + index;
+    
     var tableIndex =  document.createElement("td");
-    tableIndex.innerHTML = index+1;
+    var content = document.createTextNode(index+1);
+    var tableIndex =  document.createElement("td");
+    tableIndex.appendChild(content);
     tableRow.appendChild(tableIndex);
+    
     for(var k in contentField){
         var tableField = document.createElement("td");
-        tableField.innerHTML = document.forms[formName][k].value;
+        var content = document.createTextNode(formContent[k]);
+        tableField.appendChild(content);
         tableRow.appendChild(tableField);
     }
     debugger;
     tableRow.appendChild(this._CreateButton(index));
     var parent = document.getElementById("datasRow");
     parent.appendChild(tableRow);
-    //reset form
-    document.getElementById(formName).reset();
+    
 }
 
 Functions.prototype._CreateButton = function(index){
