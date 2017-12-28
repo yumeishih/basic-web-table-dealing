@@ -1,10 +1,9 @@
-var storageName = 'RakutenDatas';
+var storageName = "RakutenDatas";
 var contentField = {
-    name:'',
-    phone:'',
-    email:''
+    name: "",
+    phone: "",
+    email: "",
 };
-var formAttributesCount = Object.keys(contentField).length;
 var Function = new Functions();
 
 
@@ -17,8 +16,8 @@ Functions.prototype.InsertData = function()
     var formContent = contentField; 
     this._getFormContent(formName,formContent);
     if (localStorage.getItem(storageName) === null) {
-        var datas = [];
-        localStorage[storageName] = JSON.stringify(datas);
+        var datasInit = [];
+        localStorage[storageName] = JSON.stringify(datasInit);
     }
     if(this._IsValidate(formContent))
     {
@@ -40,10 +39,10 @@ Functions.prototype.DeleteData = function(index)
 };
 
 Functions.prototype.ModifyData = function(action) {
-   var formName = "modifyForm"
-   var formContent = contentField; 
+    var formName = "modifyForm";
+    var formContent = contentField; 
     this._getFormContent(formName,formContent);
-   console.log(action.innerHTML);
+    console.log(action.innerHTML);
     if (action.innerHTML === "Cancel") window.location.reload(); 
     else{
         var index = document.getElementById(formName).value;
@@ -59,7 +58,7 @@ Functions.prototype._getFormContent = function(formName,formContent)
     for(var k in contentField){
         formContent[k] = document.forms[formName][k].value;
     }
-}
+};
 
 Functions.prototype._IsValidate = function(formContent,index)
 {
@@ -83,7 +82,7 @@ Functions.prototype._IsValidate = function(formContent,index)
         this.alertMsg(2); //EMAIL_EMPTY_ALERT
         return false;
     }
-    return this._IsValidFormat(formContent)
+    return this._IsValidFormat(formContent);
 };
 
 Functions.prototype._IsValidFormat = function(formContent)
@@ -91,8 +90,8 @@ Functions.prototype._IsValidFormat = function(formContent)
     var reg = {
         name:/^\S*$/,
         phone:/^[0-9]*$/,
-        email:/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/
-    }
+        email:/^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>().,;\s@"]+.{0,1})+([^<>().,;:\s@"]{2,}|[\d.]+))$/,
+    };
     for(var key in formContent)
     {
         if(!reg[key].test(formContent[key])) {
@@ -120,22 +119,21 @@ Functions.prototype._ReplaceElement = function(index,formContent)
     var child = document.getElementById("data" + index);
     var tableRow = this._CreateElement(index,formContent);
     parent.replaceChild(tableRow,child);
-}
+};
 
 Functions.prototype._AppendElement = function(index,formContent){
     var parent = document.getElementById("datasRow");
     var tableRow = this._CreateElement(index,formContent);
     parent.appendChild(tableRow);
-}
+};
 
 Functions.prototype._CreateElement = function(index,formContent){
     var tableRow = document.createElement("tr");
     tableRow.id = "data" + index;
     
     var tableIndex =  document.createElement("td");
-    var content = document.createTextNode(index+1);
-    var tableIndex =  document.createElement("td");
-    tableIndex.appendChild(content);
+    var contentIndex = document.createTextNode(index+1);
+    tableIndex.appendChild(contentIndex);
     tableRow.appendChild(tableIndex);
     
     for(var k in contentField){
@@ -146,7 +144,7 @@ Functions.prototype._CreateElement = function(index,formContent){
     }
     tableRow.appendChild(this._CreateButton(index));   
     return tableRow; 
-}
+};
 
 Functions.prototype._CreateButton = function(index){
     var tableField = document.createElement("td");
@@ -175,7 +173,7 @@ Functions.prototype._CreateButton = function(index){
     tableField.appendChild(modifyButton);
 
     return tableField;
-}
+};
 
 Functions.prototype.ShowModifyForm = function(index){
     var form = document.getElementById("modifyForm");
@@ -187,7 +185,7 @@ Functions.prototype.ShowModifyForm = function(index){
         form[k].value = datas[index][k];
     }
     form.value = index;
-}
+};
 
 Functions.prototype.ShowInsertForm = function()
 {
@@ -197,7 +195,7 @@ Functions.prototype.ShowInsertForm = function()
         if(document.getElementById("modifyForm").style.display === "block") document.getElementById("modifyForm").style.display = "none";
         form.style.display = "block";
     }
-}
+};
 
 Functions.prototype.Showtable = function()
 {
@@ -219,9 +217,14 @@ Functions.prototype.testing =function()
     return true;
 };
 
-Functions.prototype.alertMsg = function(msgIndex,key="")
+Functions.prototype.alertMsg = function(msgIndex,key)
 {
-    alert(alertMsg[Object.keys(alertMsg)[msgIndex]]+key);
-}
+    if(key === undefined){
+        alert(alertMsg[Object.keys(alertMsg)[msgIndex]]);
+    }
+    else{
+        alert(alertMsg[Object.keys(alertMsg)[msgIndex]]+key);
+    }
+};
 
 if(typeof window === "undefined") module.exports = Functions;
