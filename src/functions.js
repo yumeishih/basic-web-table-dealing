@@ -5,7 +5,7 @@ var contentField = {
     email:''
 };
 var formAttributesCount = Object.keys(contentField).length;
-
+var Function = new Functions();
 
 
 function Functions(){
@@ -30,7 +30,6 @@ Functions.prototype.InsertData = function()
 
 Functions.prototype.DeleteData = function(index)
 {
-    console.log(index);
     var datas = JSON.parse(localStorage[storageName]);
     datas.splice(index, 1);
     localStorage[storageName] = JSON.stringify(datas);
@@ -56,7 +55,7 @@ Functions.prototype._IsValidate = function(formName,index)
     for(var k in contentField){
         formContent[k] = document.forms[formName][k].value;
     }
-    if(formContent.name === null|| formContent.name ===""){
+    if(formContent.name === null||formContent.name===""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
     }
@@ -118,35 +117,42 @@ Functions.prototype._AppendData = function(index,formName){
         tableField.innerHTML = document.forms[formName][k].value;
         tableRow.appendChild(tableField);
     }
+    debugger;
+    tableRow.appendChild(this._CreateButton(index));
+    var parent = document.getElementById("datasRow");
+    parent.appendChild(tableRow);
+    //reset form
+    document.getElementById(formName).reset();
+}
+
+Functions.prototype._CreateButton = function(index){
     var tableField = document.createElement("td");
+    debugger;
     //Delete Button
     var deleteButton = document.createElement("button");
-    deleteButton.type="button";
+    deleteButton.id="deleteData";
+    //deleteButton.type="button";
     deleteButton.classList .add("deleteDataClass","btn","btn-default","btn-xs");
     deleteButton.value = index;
+    deleteButton.addEventListener("click",function(){Function.DeleteData(this.value);});
     var deleteSpan = document.createElement("span");
     deleteSpan.classList.add("glyphicon","glyphicon-trash");
     var deleteText = document.createTextNode("Delete");
     deleteButton.appendChild(deleteSpan).appendChild(deleteText);
-    // deleteButton.appendChild(deleteText);
     tableField.appendChild(deleteButton);
-    tableField.innerHTML += "&nbsp;";
     //Modify Button
     var modifyButton = document.createElement("button");
     modifyButton.id="showModifyForm";
     modifyButton.classList.add("showFormClass","btn","btn-default","btn-xs");
     modifyButton.value = index;
+    modifyButton.addEventListener("click", function(){ Function.ShowForm(this);});
     var modifySpan = document.createElement("span");
     modifySpan.classList.add("glyphicon","glyphicon-pencil");
     var modifyText = document.createTextNode("Modify");
-    modifyButton.appendChild(modifySpan);
-    modifyButton.appendChild(modifyText);
+    modifyButton.appendChild(modifySpan).appendChild(modifyText);
     tableField.appendChild(modifyButton);
-    tableRow.appendChild(tableField);
-    var parent = document.getElementById("datasRow");
-    parent.appendChild(tableRow);
-    //reset form
-    document.getElementById(formName).reset();
+
+    return tableField;
 }
 
 Functions.prototype.ShowForm = function(formName)
@@ -156,6 +162,7 @@ Functions.prototype.ShowForm = function(formName)
         var index = formName.value; 
         var form = document.getElementById("modifyForm");
         form.style.display = "block";
+        if(document.getElementById("insertForm").style.display === "block") document.getElementById("insertForm").style.display = "none";
         var datas = JSON.parse(localStorage[storageName]);
         for(var k in contentField)
         {
@@ -166,7 +173,10 @@ Functions.prototype.ShowForm = function(formName)
     else{
         var form = document.getElementById(formName.value);
         if(form.style.display === "block") form.style.display = "none";
-        else form.style.display = "block";
+        else {
+            if(document.getElementById("modifyForm").style.display === "block") document.getElementById("modifyForm").style.display = "none";
+            form.style.display = "block";
+        }
     }
 };
 
@@ -203,5 +213,4 @@ Functions.prototype.alertMsg = function(msgIndex,key="")
     alert(alertMsg[Object.keys(alertMsg)[msgIndex]]+key);
 }
 
- 
 if(typeof window === "undefined") module.exports = Functions;
