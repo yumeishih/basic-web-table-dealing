@@ -17,10 +17,3 @@ for(var i=0;i<modifyDataClassItems.length;i++)
         Function.ModifyData(this);
     });
 }
-
-var deleteDataClassItems = document.getElementsByClassName("deleteDataClass");
-for(var i=0;i<deleteDataClassItems.length;i++)
-{
-    deleteDataClassItems[i].addEventListener('click',function(){
-        Function.DeleteData(this.value);});
-}

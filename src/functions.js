@@ -63,10 +63,6 @@ Functions.prototype._getFormContent = function(formName,formContent)
 
 Functions.prototype._IsValidate = function(formContent,index)
 {
-    /*var formContent = contentField;
-    for(var k in contentField){
-        formContent[k] = document.forms[formName][k].value;
-    }*/
     if(formContent.name === null||formContent.name===""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
@@ -133,7 +129,6 @@ Functions.prototype._AppendData = function(index,formContent){
         tableField.appendChild(content);
         tableRow.appendChild(tableField);
     }
-    debugger;
     tableRow.appendChild(this._CreateButton(index));
     var parent = document.getElementById("datasRow");
     parent.appendChild(tableRow);
@@ -142,7 +137,6 @@ Functions.prototype._AppendData = function(index,formContent){
 
 Functions.prototype._CreateButton = function(index){
     var tableField = document.createElement("td");
-    debugger;
     //Delete Button
     var deleteButton = document.createElement("button");
     deleteButton.id="deleteData";
@@ -197,22 +191,14 @@ Functions.prototype.ShowForm = function(formName)
 
 Functions.prototype.Showtable = function()
 {
-    var htmlString = "";
-    var actionString1 = "<button type=\"button\" class=\"deleteDataClass btn btn-default btn-xs\" value=";
-    var actionString2 = "><span class=\"glyphicon glyphicon-trash\"></span> Delete</button>&nbsp;<button id=\"showModifyForm\" class=\"showFormClass btn btn-default btn-xs\" value =";
-    var actionString3 = "><span class=\"glyphicon glyphicon-pencil\"></span> Modify</button>";
     if (localStorage.getItem(storageName) === null);
     else{
         var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length; 
+        document.getElementById("datasRow").innerHTML = null;
         for( var i=0;i<dataCount;i++){
-            htmlString = htmlString +"<tr id=\"data"+i+"\"><td>" + (i+1) + "</td>";
-            for(var k in contentField){
-                htmlString = htmlString + "<td>"+ datas[i][k] + "</td>";
-            }
-            htmlString = htmlString + "<td>"+actionString1+i+actionString2+i+actionString3+ "</td></tr>";
+            this._AppendData(i,datas[i]);
         }
-        document.getElementById("datasRow").innerHTML = htmlString;
     }
 };
 
