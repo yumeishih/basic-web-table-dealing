@@ -25,7 +25,7 @@ Functions.prototype.InsertData = function()
         var datas = JSON.parse(localStorage[storageName]);
         var dataCount = datas.length; 
         this._Setdatas(dataCount,formContent);
-        this._AppendData(dataCount,formContent);
+        this._AppendElement(dataCount,formContent);
         //reset form
         document.getElementById(formName).reset();
     }
@@ -49,7 +49,7 @@ Functions.prototype.ModifyData = function(action) {
         var index = document.getElementById(formName).value;
         if(this._IsValidate(formContent,index)){
             this._Setdatas(index,formContent);
-            window.location.reload(); 
+            this._ReplaceElement(index,formContent);
         }
     }
 };
@@ -113,7 +113,22 @@ Functions.prototype._Setdatas = function(index,formContent)
     }
     localStorage[storageName] = JSON.stringify(datas);
 };
-Functions.prototype._AppendData = function(index,formContent){
+
+Functions.prototype._ReplaceElement = function(index,formContent)
+{
+    var parent = document.getElementById("datasRow");
+    var child = document.getElementById("data" + index);
+    var tableRow = this._CreateElement(index,formContent);
+    parent.replaceChild(tableRow,child);
+}
+
+Functions.prototype._AppendElement = function(index,formContent){
+    var parent = document.getElementById("datasRow");
+    var tableRow = this._CreateElement(index,formContent);
+    parent.appendChild(tableRow);
+}
+
+Functions.prototype._CreateElement = function(index,formContent){
     var tableRow = document.createElement("tr");
     tableRow.id = "data" + index;
     
@@ -129,10 +144,8 @@ Functions.prototype._AppendData = function(index,formContent){
         tableField.appendChild(content);
         tableRow.appendChild(tableField);
     }
-    tableRow.appendChild(this._CreateButton(index));
-    var parent = document.getElementById("datasRow");
-    parent.appendChild(tableRow);
-    
+    tableRow.appendChild(this._CreateButton(index));   
+    return tableRow; 
 }
 
 Functions.prototype._CreateButton = function(index){
@@ -194,7 +207,7 @@ Functions.prototype.Showtable = function()
         var dataCount = datas.length; 
         document.getElementById("datasRow").innerHTML = null;
         for( var i=0;i<dataCount;i++){
-            this._AppendData(i,datas[i]);
+            this._AppendElement(i,datas[i]);
         }
     }
 };
