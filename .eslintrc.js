@@ -5,14 +5,14 @@ module.exports = {
         "node": true
     },
     "globals": {
-        "Functions": true,
+        "Table": true,
         "alertMsg": true
     },
     "rules": {
         // enable additional rules
-        "indent": ["error", 4],
+        "indent": ["error", 2],
         "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "double"],
+        "quotes": ["error", "single"],
         "semi": ["error", "always"],
 
         // override default options for rules from base configurations
@@ -23,5 +23,22 @@ module.exports = {
         "no-console": "off",
         "curly": ["error", "multi"],
         "object-curly-spacing":["error", "always"],
+
+        "space-before-function-paren": ["error", "always"],
+        "brace-style": ["error"],
+        "camelcase": ["error", {"properties": "always"}],
+        "spaced-comment": ["error", "always", {
+            "line": {
+                "markers": ["/"],
+                "exceptions": ["-", "+"]
+            },
+            "block": {
+                "markers": ["!"],
+                "exceptions": ["*"],
+                "balanced": true
+            }
+        }],
+        "space-before-blocks": "error",
+        "keyword-spacing": ["error", { "before": true }],
     }
 };

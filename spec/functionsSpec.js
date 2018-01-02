@@ -1,5 +1,5 @@
 var Functions = require('../src/functions.js');
-var Function = new Functions();
+var Function = new Table();
 
 describe('_IsValidFormat',function(){
     var fakeForm;
