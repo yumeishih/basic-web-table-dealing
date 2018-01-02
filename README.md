@@ -24,34 +24,30 @@ Run server:
 ```sh
 $ node server.js
 ```
-<<<<<<< HEAD
 Browser: http://localhost:8000/
 
 #### Functions List
 ---
-| Name | Describe |Unit test|
+| Name | Describe |Test|
 | ------ | ------ | ------ |
-| InsertData |||
-| DeleteData |||
-| ModifyData |||
-| _GetFormContent |||
-| _IsValidate |||
-| _IsValidFormat ||:heavy_check_mark:|
-| _Setdatas |||
-| _ReplaceElement |||
-| _AppendElement |||
-| _CreateElement |||
-| _CreateButton |||
-| ShowModifyForm |||
-| ShowInsertForm |||
-| Showtable |||
-| alertMsg |||
+| InsertData() |||
+| DeleteData(index) |||
+| ModifyData(action) |||
+| _GetFormContent(formName,formContent) |||
+| _IsValidate(formContent,index) |||
+| _IsValidFormat(formContent) ||:heavy_check_mark:|
+| _Setdatas(index,formContent) |||
+| _ReplaceElement(index,formContent) |||
+| _AppendElement(index,formContent) |||
+| _CreateElement(index,formContent) |||
+| _CreateButton(index) |||
+| ShowModifyForm(index) |||
+| ShowInsertForm() |||
+| Showtable() |||
+| alertMsg(msgIndex,key) |||
 
 #### Testing
 ```sh
 $ npm run test
 ```
-=======
-Browser: 
-url: [http://localhost:8000/]
->>>>>>> 6553e22fd227c260ca22b12fcea784201c8a94e0
+
