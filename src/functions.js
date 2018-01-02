@@ -13,7 +13,7 @@ function Functions(){
 Functions.prototype.InsertData = function(){
     var formName = "insertForm";
     var formContent = contentField; 
-    this._getFormContent(formName,formContent);
+    this._GetFormContent(formName,formContent);
     if (localStorage.getItem(storageName) === null) {
         var datasInit = [];
         localStorage[storageName] = JSON.stringify(datasInit);
@@ -38,7 +38,7 @@ Functions.prototype.DeleteData = function(index){
 Functions.prototype.ModifyData = function(action) {
     var formName = "modifyForm";
     var formContent = contentField; 
-    this._getFormContent(formName,formContent);
+    this._GetFormContent(formName,formContent);
     console.log(action.innerHTML);
     if (action.innerHTML === "Cancel") document.forms[formName].style.display = "none";
     else{
@@ -52,7 +52,7 @@ Functions.prototype.ModifyData = function(action) {
     }
 };
 
-Functions.prototype._getFormContent = function(formName,formContent){
+Functions.prototype._GetFormContent = function(formName,formContent){
     for(var k in contentField) formContent[k] = document.forms[formName][k].value;
 };
 
