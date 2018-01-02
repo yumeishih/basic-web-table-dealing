@@ -31,7 +31,7 @@ describe('_isValidFormat',function(){
 describe('_isValidate',function(){
     var fakeForm;
     var fakeDatas;
-    var index = 0;
+    var index;
     beforeEach(function(){
         mockLocalStorage();
         fakeDatas=[
@@ -51,14 +51,24 @@ describe('_isValidate',function(){
             phone: "0900000000",
             email: "kiki@mail.com" 
         }
+        index = fakeDatas.length;
         spyOn(Function,"alertMsg");
         spyOn(JSON, 'parse').and.returnValue(fakeDatas);
     });
     it('success',function(){
         expect(Function._isValidate(fakeForm,index)).toBeTruthy();
     });
-    
-    
-
+    it('name empty',function(){
+        fakeForm.name = "";
+        expect(Function._isValidate(fakeForm,index)).toBeFalsy();
+    });
+    it('user exist',function(){
+        fakeForm.name = "fifi";
+        expect(Function._isValidate(fakeForm,index)).toBeFalsy();
+    });
+    it('email empty',function(){
+        fakeForm.email = "";
+        expect(Function._isValidate(fakeForm,index)).toBeFalsy();
+    });
 });
 
