@@ -9,7 +9,7 @@
 >> - Basic auth for Name, Phone, and Email.
 >> - Please make UI as beautiful as possible.
 
-#### Environment Require:
+#### Environment Require
 ----
 1. npm (version 5.6.0 or above)
 2. node (version 7.0.0 or above)
@@ -25,4 +25,6 @@ Run server:
 $ node server.js
 ```
 Browser: 
-
+```
+url: [http://localhost:8000/]
+```
