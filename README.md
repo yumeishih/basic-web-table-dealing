@@ -18,7 +18,7 @@
 ----
 Initialize: 
 ```sh
-$ npm init
+$ npm install
 ```
 Run server: 
 ```sh
