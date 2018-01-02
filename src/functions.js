@@ -57,14 +57,14 @@ Functions.prototype._getFormContent = function(formName,formContent){
 };
 
 Functions.prototype._IsValidate = function(formContent,index){
-    if(formContent.name === null||formContent.name===""){
+    if(formContent.name === null || formContent.name === ""){
         this.alertMsg(0); //NAME_EMPTY_ALERT
         return false;
     }
     else{
         var datas = JSON.parse(localStorage[storageName]);
         var len = datas.length;
-        for(var i = 0;i<len;i++){
+        for(var i = 0; i<len; i++){
             if(i === parseInt(index)) continue; 
             if(formContent.name === datas[i].name){
                 this.alertMsg(1); //USER_EXIST_ALERT
@@ -72,7 +72,7 @@ Functions.prototype._IsValidate = function(formContent,index){
             }
         }
     }
-    if(formContent.email === null||formContent.email === ""){
+    if(formContent.email === null || formContent.email === ""){
         this.alertMsg(2); //EMAIL_EMPTY_ALERT
         return false;
     }
@@ -189,15 +189,10 @@ Functions.prototype.Showtable = function(){
     }
 };
 
-var window;
-Functions.prototype.testing = function(){
-    console.log("Hello world from functions!");
-    return true;
-};
-
 Functions.prototype.alertMsg = function(msgIndex,key){
     if(key === undefined) alert(alertMsg[Object.keys(alertMsg)[msgIndex]]);
     else alert(alertMsg[Object.keys(alertMsg)[msgIndex]]+key);  
 };
 
+var window;
 if(typeof window === "undefined") module.exports = Functions;

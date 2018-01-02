@@ -10,9 +10,9 @@ document.getElementById("insertData").addEventListener("click", function(){
 });
 
 var modifyDataClassItems = document.getElementsByClassName("modifyDataClass");
-for(var i=0;i<modifyDataClassItems.length;i++)
-
+for(var i = 0;i<modifyDataClassItems.length; i++){
     modifyDataClassItems[i].addEventListener("click", function(){
         Function.ModifyData(this);
     });
+}
 

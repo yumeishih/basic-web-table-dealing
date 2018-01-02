@@ -1,15 +1,8 @@
 var Functions = require('../src/functions.js');
 var Function = new Functions();
 
-describe('Functions Testing',function(){
-    it('testing',function(){
-        expect(Function.testing()).toBeTruthy();
-    });
-});
-
 describe('_IsValidFormat',function(){
     var fakeForm;
-    var datas;
     beforeEach(function(){
         fakeForm = {
             name: "kiki",
@@ -33,6 +26,24 @@ describe('_IsValidFormat',function(){
         fakeForm.email = "wrongEmailFomat"; 
         expect(Function._IsValidFormat(fakeForm)).toBeFalsy();
     });
+});
+
+describe('_IsValidate',function(){
+    var fakeForm;
+    var index = 0;
+    beforeEach(function(){
+        fakeForm = {
+            name: "kiki",
+            phone: "0900000000",
+            email: "kiki@mail.com" 
+        }
+        spyOn(Function,"alertMsg");
+    });
+    it('success',function(){
+        expect(Function._IsValidate(fakeForm,index)).toBeTruthy();
+    });
+    
+    
 
 });
 
