@@ -115,9 +115,10 @@ Table.prototype._appendElement = function (index,formContent) {
 Table.prototype._createElement = function (index,formContent) {
   var tableRow = document.createElement('tr');
   tableRow.id = 'data' + index;
-    
+
   var tableIndex =  document.createElement('td');
-  var contentIndex = document.createTextNode(index+1);
+  var tmp = parseInt(index)+1;
+  var contentIndex = document.createTextNode(tmp);
   tableIndex.appendChild(contentIndex);
   tableRow.appendChild(tableIndex);
     
