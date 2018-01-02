@@ -24,6 +24,7 @@ Run server:
 ```sh
 $ node server.js
 ```
+<<<<<<< HEAD
 Browser: http://localhost:8000/
 
 #### Functions List
@@ -50,3 +51,7 @@ Browser: http://localhost:8000/
 ```sh
 $ npm run test
 ```
+=======
+Browser: 
+url: [http://localhost:8000/]
+>>>>>>> 6553e22fd227c260ca22b12fcea784201c8a94e0
