@@ -16,7 +16,7 @@
 
 #### Get Start
 ----
-Initialize: 
+Initialize(install the packages in package.json): 
 ```sh
 $ npm install
 ```
