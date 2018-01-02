@@ -28,7 +28,7 @@ Browser: http://localhost:8000/
 
 #### Functions List
 ---
-| Name | Describe |Test|
+| Name | Description |Test|
 | ------ | ------ | ------ |
 | InsertData() |||
 | DeleteData(index) |||
