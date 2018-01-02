@@ -25,6 +25,4 @@ Run server:
 $ node server.js
 ```
 Browser: 
-```
 url: [http://localhost:8000/]
-```
