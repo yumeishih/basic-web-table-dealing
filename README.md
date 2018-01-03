@@ -34,7 +34,7 @@ Browser: http://localhost:8000/
 | DeleteData(index) |||
 | ModifyData(action) |||
 | _GetFormContent(formName,formContent) |||
-| _IsValidate(formContent,index) |||
+| _IsValidate(formContent,index) ||:heavy_check_mark:|
 | _IsValidFormat(formContent) ||:heavy_check_mark:|
 | _Setdatas(index,formContent) |||
 | _ReplaceElement(index,formContent) |||
