@@ -1,34 +1,7 @@
 var Table = require('../src/functions.js');
 var Function = new Table();
 
-describe('_isValidFormat',function(){
-    var fakeForm;
-    beforeEach(function(){
-        fakeForm = {
-            name: "kiki",
-            phone: "0900000000",
-            email: "kiki@mail.com" 
-        }
-        spyOn(Function,"alertMsg");
-    });
-    it('success',function(){
-        expect(Function._isValidFormat(fakeForm)).toBeTruthy();
-    });
-    it('name format error',function(){
-        fakeForm.name = "      "; 
-        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
-    });
-    it('phone format error',function(){
-        fakeForm.phone = "aaaaaaa";  
-        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
-    });
-    it('email format error',function(){
-        fakeForm.email = "wrongEmailFomat"; 
-        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
-    });
-});
-
-describe('_isValidate',function(){
+describe('Test',function(){
     var fakeForm;
     var fakeLocalstorage;
     var index;
@@ -51,9 +24,38 @@ describe('_isValidate',function(){
             phone: "0900000000",
             email: "kiki@mail.com" 
         }
-        index = fakeLocalstorage.length;
+
+        spyOn(Function,'_appendElement');
+        spyOn(Function,'_replaceElement');
+        spyOn(Function,'_getFormContent').and.callFake(function(formName){
+            return fakeForm;
+        });
         spyOn(Function,"alertMsg");
-        spyOn(JSON, 'parse').and.returnValue(fakeLocalstorage);
+        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
+        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
+    });
+describe('_isValidFormat',function(){
+
+    it('success',function(){
+        expect(Function._isValidFormat(fakeForm)).toBeTruthy();
+    });
+    it('name format error',function(){
+        fakeForm.name = "      "; 
+        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
+    });
+    it('phone format error',function(){
+        fakeForm.phone = "aaaaaaa";  
+        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
+    });
+    it('email format error',function(){
+        fakeForm.email = "wrongEmailFomat"; 
+        expect(Function._isValidFormat(fakeForm)).toBeFalsy();
+    });
+});
+
+describe('_isValidate',function(){
+    beforeEach(function(){
+        index = fakeLocalstorage.length;
     });
     it('success',function(){
         expect(Function._isValidate(fakeForm,index)).toBeTruthy();
@@ -73,36 +75,6 @@ describe('_isValidate',function(){
 });
 
 describe('insertData',function(){
-    var fakeForm;
-    var fakeLocalstorage;
-    var action;
-    beforeEach(function(){
-        mockLocalStorage();
-        fakeLocalstorage=[
-            {
-                name: "fifi",
-                phone: "0900000000",
-                email: "fifi@mail.com" 
-            },           
-            {
-                name: "yiyi",
-                phone: "0900000000",
-                email: "yiyi@mail.com" 
-            },
-        ];
-        fakeForm = {
-            name: "kiki",
-            phone: "0900000000",
-            email: "kiki@mail.com" 
-        }
-        spyOn(Function,'_appendElement');
-        spyOn(Function,'_getFormContent').and.callFake(function(formName){
-            return fakeForm;
-        });
-        spyOn(Function,"alertMsg");
-        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
-        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
-    });
     it('success',function(){
         Function.insertData();
         expect(fakeLocalstorage[2]).toEqual(fakeForm);
@@ -111,37 +83,9 @@ describe('insertData',function(){
 });
 
 describe('modifyForm',function(){
-    var fakeForm;
-    var fakeLocalstorage;
-    var index;
     var action;
     beforeEach(function(){
-        mockLocalStorage();
-        fakeLocalstorage=[
-            {
-                name: "fifi",
-                phone: "0900000000",
-                email: "fifi@mail.com" 
-            },           
-            {
-                name: "yiyi",
-                phone: "0900000000",
-                email: "yiyi@mail.com" 
-            },
-        ];
-        fakeForm = {
-            name: "kiki",
-            phone: "0900000000",
-            email: "kiki@mail.com" 
-        }
         index = 0
-        spyOn(Function,'_replaceElement');
-        spyOn(Function,'_getFormContent').and.callFake(function(formName){
-            return fakeForm;
-        });
-        spyOn(Function,"alertMsg");
-        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
-        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
     });
     it('sucess-Save',function(){
         action = {
@@ -168,27 +112,8 @@ describe('modifyForm',function(){
 });
 
 describe('deleteData',function(){
-    var fakeLocalstorage;
-    var index;
-    beforeEach(function(){
-        mockLocalStorage();
-        fakeLocalstorage=[
-            {
-                name: "fifi",
-                phone: "0900000000",
-                email: "fifi@mail.com" 
-            },           
-            {
-                name: "yiyi",
-                phone: "0900000000",
-                email: "yiyi@mail.com" 
-            },
-        ];
-        index = 1
-        spyOn(JSON, 'parse').and.returnValue(fakeLocalstorage);
-        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
-    });
     it('success',function(){
+        index = 1;
         Function.deleteData(index);
         expect(fakeLocalstorage.length).toBe(1);
     });
@@ -199,33 +124,8 @@ describe('deleteData',function(){
 });
 
 describe('_setDatas',function(){
-    var fakeForm;
-    var fakeLocalstorage;
-    var index;
-    beforeEach(function(){
-        mockLocalStorage();
-        fakeLocalstorage=[
-            {
-                name: "fifi",
-                phone: "0900000000",
-                email: "fifi@mail.com" 
-            },           
-            {
-                name: "yiyi",
-                phone: "0900000000",
-                email: "yiyi@mail.com" 
-            },
-        ];
-        fakeForm = {
-            name: "kiki",
-            phone: "0900000000",
-            email: "kiki@mail.com" 
-        }
-        index = 0
-        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
-        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
-    });
     it('success-modify',function(){
+        index = 0;
         Function._setDatas(index,fakeForm);
         expect(fakeLocalstorage[index]).toEqual(fakeForm);
     });
@@ -236,3 +136,4 @@ describe('_setDatas',function(){
     });
 });
 
+});
