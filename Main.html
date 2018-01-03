@@ -8,7 +8,8 @@
 </head>
 <body>
 <div class="container">
-  <img class="col-md-2" src="pic/ec-img-1.png" alt="Rakuten">           
+  <div class = "row"><img class="col-md-2" src="pic/ec-img-1.png" alt="Rakuten"></div>
+  <div class = "row  col-md-12">        
   <table class="table table-striped" id="myTable">
     <thead>
       <tr>
@@ -21,9 +22,11 @@
     </thead>
     <tbody id ="datasRow"></tbody>
   </table>
-  <button id="showInsertForm" class="btn btn-sm showFormClass" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
-  <br>
-  <div id = "showForm" class="col-sm-4">
+  </div>
+  <div class = "row">
+      <button id="showInsertForm" class="btn btn-sm showFormClass" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
+  </div>
+  <div id = "showForm" class="col-md-4 row">
     <form id = "insertForm" method="post"> 
       <h3>Insert</h3>
       <p id = "insertFormErrorMsg"></p>
