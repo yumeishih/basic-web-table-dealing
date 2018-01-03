@@ -36,7 +36,7 @@ Browser: http://localhost:8000/
 | _GetFormContent(formName,formContent) |||
 | _IsValidate(formContent,index) ||:heavy_check_mark:|
 | _IsValidFormat(formContent) ||:heavy_check_mark:|
-| _Setdatas(index,formContent) |||
+| _Setdatas(index,formContent) ||:heavy_check_mark:|
 | _ReplaceElement(index,formContent) |||
 | _AppendElement(index,formContent) |||
 | _CreateElement(index,formContent) |||
