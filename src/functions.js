@@ -212,7 +212,10 @@ if (typeof window === 'undefined') {
       }
     },
     getElementById : function(){
-      return {value:0};
+      return {
+        value : 0,
+        reset : function(){}
+      };
     }
   }
   window = {

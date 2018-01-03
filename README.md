@@ -30,7 +30,7 @@ Browser: http://localhost:8000/
 ---
 | Name | Description |Test|
 | ------ | ------ | ------ |
-| InsertData() |||
+| InsertData() ||:heavy_check_mark:|
 | DeleteData(index) ||:heavy_check_mark:|
 | ModifyData(action) ||:heavy_check_mark:|
 | _GetFormContent(formName) |||

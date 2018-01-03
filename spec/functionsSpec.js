@@ -72,6 +72,44 @@ describe('_isValidate',function(){
     });
 });
 
+describe('insertData',function(){
+    var fakeForm;
+    var fakeLocalstorage;
+    var action;
+    beforeEach(function(){
+        mockLocalStorage();
+        fakeLocalstorage=[
+            {
+                name: "fifi",
+                phone: "0900000000",
+                email: "fifi@mail.com" 
+            },           
+            {
+                name: "yiyi",
+                phone: "0900000000",
+                email: "yiyi@mail.com" 
+            },
+        ];
+        fakeForm = {
+            name: "kiki",
+            phone: "0900000000",
+            email: "kiki@mail.com" 
+        }
+        spyOn(Function,'_appendElement');
+        spyOn(Function,'_getFormContent').and.callFake(function(formName){
+            return fakeForm;
+        });
+        spyOn(Function,"alertMsg");
+        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
+        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
+    });
+    it('success',function(){
+        Function.insertData();
+        expect(fakeLocalstorage[2]).toEqual(fakeForm);
+    });
+
+});
+
 describe('modifyForm',function(){
     var fakeForm;
     var fakeLocalstorage;
@@ -187,7 +225,12 @@ describe('_setDatas',function(){
         spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
         spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
     });
-    it('success',function(){
+    it('success-modify',function(){
+        Function._setDatas(index,fakeForm);
+        expect(fakeLocalstorage[index]).toEqual(fakeForm);
+    });
+    it('success-insert',function(){
+        index = 2
         Function._setDatas(index,fakeForm);
         expect(fakeLocalstorage[index]).toEqual(fakeForm);
     });
