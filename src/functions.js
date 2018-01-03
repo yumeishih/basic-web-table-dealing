@@ -28,9 +28,9 @@ Table.prototype.insertData = function () {
 
 Table.prototype.deleteData = function (index) {
   var datas = JSON.parse(localStorage[storageName]);
-  if(index >= datas.length) {
+  if (index >= datas.length) 
     throw new Error('out of index!');
-  }
+  
   datas.splice(index, 1);
   localStorage[storageName] = JSON.stringify(datas);
   window.location.reload();
@@ -40,7 +40,7 @@ Table.prototype.modifyData = function (action) {
   var formName = 'modifyForm';
   var formContent = this._getFormContent(formName,formContent);
   if (action.innerHTML === 'Cancel') document.forms[formName].style.display = 'none';
-  else if(action.innerHTML === 'Save') {
+  else if (action.innerHTML === 'Save') {
     var index = document.getElementById(formName).value;
     if (this._isValidate(formContent,index)) {
       this._setDatas(index,formContent);
@@ -48,9 +48,9 @@ Table.prototype.modifyData = function (action) {
       // reset form
       document.forms[formName].style.display = 'none';
     }
-  }else{
+  } else 
     throw new Error('Illegal action: '+ action.innerHTML);
-  }
+  
 };
 
 Table.prototype._getFormContent = function (formName) {
@@ -207,21 +207,21 @@ if (typeof window === 'undefined') {
     forms:{
       'modifyForm':{
         style : {
-          display: 'none'
-        }
-      }
+          display: 'none',
+        },
+      },
     },
-    getElementById : function(){
+    getElementById : function () {
       return {
         value : 0,
-        reset : function(){}
+        reset : function () {},
       };
-    }
-  }
+    },
+  };
   window = {
     location: {
-      reload: function(){},
-    }
-  }
+      reload: function () {},
+    },
+  };
   module.exports = Table;
 }
