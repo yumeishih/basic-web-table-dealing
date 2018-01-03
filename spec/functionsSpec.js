@@ -71,6 +71,64 @@ describe('_isValidate',function(){
         expect(Function._isValidate(fakeForm,index)).toBeFalsy();
     });
 });
+
+describe('modifyForm',function(){
+    var fakeForm;
+    var fakeLocalstorage;
+    var index;
+    var action;
+    beforeEach(function(){
+        mockLocalStorage();
+        fakeLocalstorage=[
+            {
+                name: "fifi",
+                phone: "0900000000",
+                email: "fifi@mail.com" 
+            },           
+            {
+                name: "yiyi",
+                phone: "0900000000",
+                email: "yiyi@mail.com" 
+            },
+        ];
+        fakeForm = {
+            name: "kiki",
+            phone: "0900000000",
+            email: "kiki@mail.com" 
+        }
+        index = 0
+        spyOn(Function,'_replaceElement');
+        spyOn(Function,'_getFormContent').and.callFake(function(formName){
+            return fakeForm;
+        });
+        spyOn(Function,"alertMsg");
+        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
+        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
+    });
+    it('sucess-Save',function(){
+        action = {
+            innerHTML: "Save"
+        }
+        Function.modifyData(action);
+        expect(fakeLocalstorage[index]).toEqual(fakeForm);
+    });
+    it('sucess-Cancel',function(){
+        action = {
+            innerHTML: "Cancel"
+        }
+        var tmp = fakeLocalstorage[index];
+        Function.modifyData(action);
+        expect(fakeLocalstorage[index]).toEqual(tmp);
+    });
+    it('Illegal action',function(){
+        action = {
+            innerHTML: "Hahaha"
+        }
+        expect(function(){Function.modifyData(action)}).toThrowError('Illegal action: '+ action.innerHTML);
+    });
+
+});
+
 describe('deleteData',function(){
     var fakeLocalstorage;
     var index;
@@ -134,3 +192,4 @@ describe('_setDatas',function(){
         expect(fakeLocalstorage[index]).toEqual(fakeForm);
     });
 });
+

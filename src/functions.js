@@ -11,8 +11,7 @@ function Table () {
 
 Table.prototype.insertData = function () {
   var formName = 'insertForm';
-  var formContent = contentField; 
-  this._getFormContent(formName,formContent);
+  var formContent  = this._getFormContent(formName);
   if (localStorage.getItem(storageName) === null) {
     var datasInit = [];
     localStorage[storageName] = JSON.stringify(datasInit);
@@ -39,11 +38,9 @@ Table.prototype.deleteData = function (index) {
 
 Table.prototype.modifyData = function (action) {
   var formName = 'modifyForm';
-  var formContent = contentField; 
-  this._getFormContent(formName,formContent);
-  console.log(action.innerHTML);
+  var formContent = this._getFormContent(formName,formContent);
   if (action.innerHTML === 'Cancel') document.forms[formName].style.display = 'none';
-  else {
+  else if(action.innerHTML === 'Save') {
     var index = document.getElementById(formName).value;
     if (this._isValidate(formContent,index)) {
       this._setDatas(index,formContent);
@@ -51,11 +48,15 @@ Table.prototype.modifyData = function (action) {
       // reset form
       document.forms[formName].style.display = 'none';
     }
+  }else{
+    throw new Error('Illegal action: '+ action.innerHTML);
   }
 };
 
-Table.prototype._getFormContent = function (formName,formContent) {
+Table.prototype._getFormContent = function (formName) {
+  var formContent = contentField; 
   for (var k in contentField) formContent[k] = document.forms[formName][k].value;
+  return formContent;
 };
 
 Table.prototype._isValidate = function (formContent,index) {
@@ -202,6 +203,18 @@ Table.prototype.alertMsg = function (msgIndex,key) {
 
 var window;
 if (typeof window === 'undefined') {
+  var document ={
+    forms:{
+      'modifyForm':{
+        style : {
+          display: 'none'
+        }
+      }
+    },
+    getElementById : function(){
+      return {value:0};
+    }
+  }
   window = {
     location: {
       reload: function(){},
