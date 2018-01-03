@@ -30,11 +30,11 @@ describe('_isValidFormat',function(){
 
 describe('_isValidate',function(){
     var fakeForm;
-    var fakeDatas;
+    var fakeLocalstorage;
     var index;
     beforeEach(function(){
         mockLocalStorage();
-        fakeDatas=[
+        fakeLocalstorage=[
             {
                 name: "fifi",
                 phone: "0900000000",
@@ -51,9 +51,9 @@ describe('_isValidate',function(){
             phone: "0900000000",
             email: "kiki@mail.com" 
         }
-        index = fakeDatas.length;
+        index = fakeLocalstorage.length;
         spyOn(Function,"alertMsg");
-        spyOn(JSON, 'parse').and.returnValue(fakeDatas);
+        spyOn(JSON, 'parse').and.returnValue(fakeLocalstorage);
     });
     it('success',function(){
         expect(Function._isValidate(fakeForm,index)).toBeTruthy();
@@ -99,5 +99,38 @@ describe('deleteData',function(){
     it('out of index',function(){
         index = 2;
         expect(function(){Function.deleteData(index)}).toThrowError('out of index!');
+    });
+});
+
+describe('_setDatas',function(){
+    var fakeForm;
+    var fakeLocalstorage;
+    var index;
+    beforeEach(function(){
+        mockLocalStorage();
+        fakeLocalstorage=[
+            {
+                name: "fifi",
+                phone: "0900000000",
+                email: "fifi@mail.com" 
+            },           
+            {
+                name: "yiyi",
+                phone: "0900000000",
+                email: "yiyi@mail.com" 
+            },
+        ];
+        fakeForm = {
+            name: "kiki",
+            phone: "0900000000",
+            email: "kiki@mail.com" 
+        }
+        index = 0
+        spyOn(JSON,'parse').and.returnValue(fakeLocalstorage);
+        spyOn(JSON,'stringify').and.callFake(function(datas){fakeLocalstorage = datas;});
+    });
+    it('success',function(){
+        Function._setDatas(index,fakeForm);
+        expect(fakeLocalstorage[index]).toEqual(fakeForm);
     });
 });
