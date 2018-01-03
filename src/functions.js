@@ -29,6 +29,9 @@ Table.prototype.insertData = function () {
 
 Table.prototype.deleteData = function (index) {
   var datas = JSON.parse(localStorage[storageName]);
+  if(index >= datas.length) {
+    throw new Error('out of index!');
+  }
   datas.splice(index, 1);
   localStorage[storageName] = JSON.stringify(datas);
   window.location.reload();
@@ -198,4 +201,11 @@ Table.prototype.alertMsg = function (msgIndex,key) {
 };
 
 var window;
-if (typeof window === 'undefined') module.exports = Table;
+if (typeof window === 'undefined') {
+  window = {
+    location: {
+      reload: function(){},
+    }
+  }
+  module.exports = Table;
+}
