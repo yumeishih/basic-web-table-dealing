@@ -33,7 +33,7 @@ Browser: http://localhost:8000/
 | InsertData() |||
 | DeleteData(index) ||:heavy_check_mark:|
 | ModifyData(action) ||:heavy_check_mark:|
-| _GetFormContent(formName,formContent) |||
+| _GetFormContent(formName) |||
 | _IsValidate(formContent,index) ||:heavy_check_mark:|
 | _IsValidFormat(formContent) ||:heavy_check_mark:|
 | _Setdatas(index,formContent) ||:heavy_check_mark:|
