@@ -42,8 +42,7 @@ Table.prototype._isValidate = function (formContent,index) {
     var datas = this.store.getData();
     var len = datas.length;
     for (var i = 0; i<len; i++) {
-      if (i === parseInt(index)) continue; 
-      if (formContent.name === datas[i].name) {
+      if (i !== parseInt(index) && formContent.name === datas[i].name) {
         alert(USER_EXIST_ALERT); 
         return false;
       }
