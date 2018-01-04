@@ -4,47 +4,51 @@
   <title>Rakuten Homework</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="mainPage.css">
 </head>
 <body>
 <div class="container">
-  <img class="col-md-2" src="pic/ec-img-1.png" alt="Rakuten">           
+  <div class="row"><img class="col-md-2" src="pic/ec-img-1.png" alt="Rakuten"></div>
+  <div class="row  col-md-12">        
   <table class="table table-striped" id="myTable">
     <thead>
       <tr>
         <th>No.</th>
         <th>Name</th>
         <th>Phone</th>
-        <th>Email<span style = "color:red;">*</span></th>
+        <th>Email<span class="requiredItem">*</span></th>
         <th>Action</th>
       </tr>
     </thead>
-    <tbody id ="datasRow"></tbody>
+    <tbody id="datasRow"></tbody>
   </table>
-  <button id="showInsertForm" class="btn btn-sm showFormClass" value = "insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
-  <br>
-  <div id = "showForm" class="col-sm-4">
-    <form id = "insertForm" method="post" style = "display:none;"> 
+  </div>
+  <div class="row">
+      <button id="showInsertForm" class="btn btn-sm showFormClass" value="insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
+  </div>
+  <div id="showForm" class="col-md-4 row">
+    <form id="insertForm" method="post"> 
       <h3>Insert</h3>
-      <p id = "insertFormErrorMsg"></p>
+      <p id="insertFormErrorMsg"></p>
       <label for="name">Name: </label>
       <input type="text" class="form-control" id="name" value="">
       <label for="phone">Phone: </label>
       <input type="text" class="form-control" id="phone" value="">
-      <label for="text"><span style = "color:red;">*</span>Email: </label>
+      <label for="text"><span class="requiredItem">*</span>Email: </label>
       <input type="email" class="form-control" id="email" value="">
       <br>
       <button id="insertData" type="button" class="btn btn-default btn-sm">Submit</button>
       <button type="reset" class="btn btn-default btn-sm">Reset</button>
     </form> 
 
-    <form id = "modifyForm" method="post" style = "display : none;"> 
+    <form id="modifyForm" method="post"> 
       <h3>Modify</h3>
-      <p id = "modifyFormErrorMsg"></p>
+      <p id="modifyFormErrorMsg"></p>
       <label for="name">Name: </label>
       <input type="text" class="form-control" id="name" value="">
       <label for="phone">Phone: </label>
       <input type="text" class="form-control" id="phone" value="">
-      <label for="email"><span style = "color:red;">*</span>Email: </label>
+      <label for="email"><span class="requiredItem">*</span>Email: </label>
       <input type="text" class="form-control" id="email" value="">
       <br>
       <button type="button" class="btn btn-default btn-sm modifyDataClass">Save</button>
