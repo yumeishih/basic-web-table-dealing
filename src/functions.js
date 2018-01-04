@@ -3,7 +3,6 @@ var contentField = {
   phone: '',
   email: '',
 };
-var Function = new Table();
 
 function Table () {
   this.store = new Store();
@@ -123,6 +122,7 @@ Table.prototype._createElement = function (index,formContent) {
 };
 
 Table.prototype._createButton = function (index) {
+  var table = this;
   var tableField = document.createElement('td');
   // Delete Button
   var deleteButton = document.createElement('button');
@@ -130,7 +130,7 @@ Table.prototype._createButton = function (index) {
   deleteButton.classList .add('deleteDataClass','btn','btn-default','btn-xs');
   deleteButton.value = index;
   deleteButton.addEventListener('click',function () {
-    Function.deleteData(this.value);
+    table.deleteData(this.value);
   });
   var deleteSpan = document.createElement('span');
   deleteSpan.classList.add('glyphicon','glyphicon-trash');
@@ -143,7 +143,7 @@ Table.prototype._createButton = function (index) {
   modifyButton.classList.add('showFormClass','btn','btn-default','btn-xs');
   modifyButton.value = index;
   modifyButton.addEventListener('click', function () {
-    Function.showModifyForm(this.value);
+    table.showModifyForm(this.value);
   });
   var modifySpan = document.createElement('span');
   modifySpan.classList.add('glyphicon','glyphicon-pencil');
