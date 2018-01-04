@@ -8,7 +8,7 @@ Table.prototype.insertData = function () {
   var formContent  = this._getFormContent();
   if (this._isValidate(formContent)) {
     this.store.setData(formContent);
-    this._appendElement(formContent);
+    this._appendRow(formContent);
     // reset form
     document.getElementById(this.formName).reset();
   }
@@ -19,7 +19,7 @@ Table.prototype.modifyData = function () {
   var formContent  = this._getFormContent();
   if (this._isValidate(formContent,index)) {
     this.store.setData(formContent,index);
-    this._replaceElement(index,formContent);
+    this._replaceRow(index,formContent);
     // reset form
     document.forms[this.formName].style.display = 'none';
   }
@@ -70,21 +70,21 @@ Table.prototype._isValidFormat = function (formContent) {
   return true;
 };
 
-Table.prototype._replaceElement = function (index,formContent) {
+Table.prototype._replaceRow = function (index,formContent) {
   var parent = document.getElementById('datasRow');
   var child = document.getElementById('data' + index);
-  var tableRow = this._createElement(index,formContent);
+  var tableRow = this._createTableRow(index,formContent);
   parent.replaceChild(tableRow,child);
 };
 
-Table.prototype._appendElement = function (formContent) {
+Table.prototype._appendRow = function (formContent) {
   var parent = document.getElementById('datasRow');
   var index = parent.childElementCount;
-  var tableRow = this._createElement(index,formContent);
+  var tableRow = this._createTableRow(index,formContent);
   parent.appendChild(tableRow);
 };
 
-Table.prototype._createElement = function (index,formContent) {
+Table.prototype._createTableRow = function (index,formContent) {
   var tableRow = document.createElement('tr');
   tableRow.id = 'data' + index;
 
@@ -99,39 +99,60 @@ Table.prototype._createElement = function (index,formContent) {
     tableField.appendChild(content);
     tableRow.appendChild(tableField);
   });
-  tableRow.appendChild(this._createButton(index));   
+  tableRow.appendChild(this._createActionTd(index));   
   return tableRow; 
 };
 
-Table.prototype._createButton = function (index) {
+Table.prototype._createElement = function(type,props){
+  var element = document.createElement(type);
+  for(attribute in props){
+    element[attribute] = props[attribute];
+  }
+  return element;
+}
+
+Table.prototype._createActionTd = function (index) {
   var table = this;
-  var tableField = document.createElement('td');
-  // Delete Button
-  var deleteButton = document.createElement('button');
-  deleteButton.id = 'deleteData';
-  deleteButton.classList .add('deleteDataClass','btn','btn-default','btn-xs');
-  deleteButton.value = index;
+  //Delete Button
+  var deleteSpanProps ={
+    className:'glyphicon glyphicon-trash',
+    textContent: 'Delete'
+  }
+  var deleteSpan = this._createElement('span',deleteSpanProps);
+
+  var deleteBtnProps = {
+    type:'button',
+    id:'deleteDate',
+    className: 'btn btn-default btn-xs',
+    value: index
+  };
+  var deleteButton = this._createElement('button',deleteBtnProps);
+  deleteButton.appendChild(deleteSpan);
   deleteButton.addEventListener('click',function () {
     table.store.deleteData(index);
     window.location.reload();
   });
-  var deleteSpan = document.createElement('span');
-  deleteSpan.classList.add('glyphicon','glyphicon-trash');
-  var deleteText = document.createTextNode('Delete');
-  deleteButton.appendChild(deleteSpan).appendChild(deleteText);
-  tableField.appendChild(deleteButton);
   // Modify Button
-  var modifyButton = document.createElement('button');
-  modifyButton.id = 'showModifyForm';
-  modifyButton.classList.add('showFormClass','btn','btn-default','btn-xs');
-  modifyButton.value = index;
+  var modifySpanProps ={
+    className:'glyphicon glyphicon-pencil',
+    textContent: 'Modify'
+  }
+  var modifySpan = this._createElement('span',modifySpanProps);
+
+  var modifyBtnProps = {
+    type:'button',
+    id:'showModifyForm',
+    className: 'btn btn-default btn-xs',
+    value: index
+  }
+  var modifyButton = this._createElement('button',modifyBtnProps);
+  modifyButton.appendChild(modifySpan);
   modifyButton.addEventListener('click', function () {
     table.showForm(this.value);
   });
-  var modifySpan = document.createElement('span');
-  modifySpan.classList.add('glyphicon','glyphicon-pencil');
-  var modifyText = document.createTextNode('Modify');
-  modifyButton.appendChild(modifySpan).appendChild(modifyText);
+
+  var tableField = document.createElement('td');
+  tableField.appendChild(deleteButton);
   tableField.appendChild(modifyButton);
 
   return tableField;
@@ -140,6 +161,7 @@ Table.prototype._createButton = function (index) {
 Table.prototype.showForm = function(index){
   var form = document.getElementById('form');
   if(!index){ // Insert
+    form.reset();
     document.getElementById('modify_buttons').style.display = 'none';
     document.getElementById('insert_buttons').style.display = 'block';
   }else{ // Modify
@@ -159,7 +181,7 @@ Table.prototype.showTable = function () {
   if (datas){
     var dataCount = datas.length; 
     document.getElementById('datasRow').innerHTML = null;
-    for ( var i = 0;i<dataCount;i++) this._appendElement(datas[i]); 
+    for ( var i = 0;i<dataCount;i++) this._appendRow(datas[i]); 
   }
 };
 
