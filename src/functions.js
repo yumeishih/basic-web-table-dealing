@@ -1,11 +1,6 @@
-var contentField = {
-  name: '',
-  phone: '',
-  email: '',
-};
-
 function Table () {
   this.store = new Store();
+  this.fields = ['name','phone','email'];
 }
 
 Table.prototype.insertData = function () {
@@ -17,14 +12,6 @@ Table.prototype.insertData = function () {
     // reset form
     document.getElementById(formName).reset();
   }
-};
- 
-Table.prototype.deleteData = function (index) {
-  var datas = this.store.getData();
-  if (index >= datas.length) throw new Error('out of index!');
-  datas.splice(index, 1);
-  this.store.setData(datas);
-  window.location.reload();
 };
 
 Table.prototype.modifyData = function (action) {
@@ -45,8 +32,10 @@ Table.prototype.modifyData = function (action) {
 };
 
 Table.prototype._getFormContent = function (formName) {
-  var formContent = contentField; 
-  for (var k in contentField) formContent[k] = document.forms[formName][k].value;
+  var formContent ={}; 
+  this.fields.forEach(function(field){
+    formContent[field] = document.forms[formName][field].value;
+  });
   return formContent;
 };
 
@@ -110,13 +99,12 @@ Table.prototype._createElement = function (index,formContent) {
   var contentIndex = document.createTextNode(tmp);
   tableIndex.appendChild(contentIndex);
   tableRow.appendChild(tableIndex);
-    
-  for (var k in contentField) {
+  this.fields.forEach(function(field){
     var tableField = document.createElement('td');
-    var content = document.createTextNode(formContent[k]);
+    var content = document.createTextNode(formContent[field]);
     tableField.appendChild(content);
     tableRow.appendChild(tableField);
-  }
+  });
   tableRow.appendChild(this._createButton(index));   
   return tableRow; 
 };
@@ -130,7 +118,8 @@ Table.prototype._createButton = function (index) {
   deleteButton.classList .add('deleteDataClass','btn','btn-default','btn-xs');
   deleteButton.value = index;
   deleteButton.addEventListener('click',function () {
-    table.deleteData(this.value);
+    table.store.deleteData(index);
+    window.location.reload();
   });
   var deleteSpan = document.createElement('span');
   deleteSpan.classList.add('glyphicon','glyphicon-trash');
@@ -159,7 +148,9 @@ Table.prototype.showModifyForm = function (index) {
   form.style.display = 'block';
   if (document.getElementById('insertForm').style.display === 'block') document.getElementById('insertForm').style.display = 'none';
   var datas = this.store.getData();
-  for (var k in contentField) form[k].value = datas[index][k];   
+  this.fields.forEach(function(field){
+    form[field].value = datas[index][field];   
+  });
   form.value = index;
 };
 
