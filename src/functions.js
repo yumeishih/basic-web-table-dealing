@@ -86,17 +86,14 @@ Table.prototype._appendRow = function (formContent) {
 
 Table.prototype._createTableRow = function (index,formContent) {
   var tableRow = document.createElement('tr');
-  tableRow.id = 'data' + index;
-
+  tableRow.id = 'data'+index;
   var tableIndex =  document.createElement('td');
-  var tmp = parseInt(index)+1;
-  var contentIndex = document.createTextNode(tmp);
-  tableIndex.appendChild(contentIndex);
+  tableIndex.textContent = parseInt(index)+1;
   tableRow.appendChild(tableIndex);
+
   this.fields.forEach(function(field){
     var tableField = document.createElement('td');
-    var content = document.createTextNode(formContent[field]);
-    tableField.appendChild(content);
+    tableField.textContent = formContent[field];
     tableRow.appendChild(tableField);
   });
   tableRow.appendChild(this._createActionTd(index));   
