@@ -72,9 +72,9 @@ Table.prototype._isValidFormat = function (formContent) {
 
 Table.prototype._replaceRow = function (index,formContent) {
   var parent = document.getElementById('datasRow');
-  var child = document.getElementById('data' + index);
-  var tableRow = this._createTableRow(index,formContent);
-  parent.replaceChild(tableRow,child);
+  var oldTableRow = document.getElementById('data' + index);
+  var newTableRow = this._createTableRow(index,formContent);
+  parent.replaceChild(newTableRow,oldTableRow);
 };
 
 Table.prototype._appendRow = function (formContent) {
