@@ -5,3 +5,7 @@ span.requiredItem {
 form {
     display:none;
 }
+
+div.formButtons{
+    display:none;
+}

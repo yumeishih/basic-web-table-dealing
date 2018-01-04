@@ -1,40 +1,40 @@
 function Table () {
   this.store = new Store();
   this.fields = ['name','phone','email'];
+  this.formName = 'form';
 }
 
 Table.prototype.insertData = function () {
-  var formName = 'insertForm';
-  var formContent  = this._getFormContent(formName);
+  var formContent  = this._getFormContent();
   if (this._isValidate(formContent)) {
     this.store.setData(formContent);
     this._appendElement(formContent);
     // reset form
-    document.getElementById(formName).reset();
+    document.getElementById(this.formName).reset();
   }
 };
 
 Table.prototype.modifyData = function (action) {
-  var formName = 'modifyForm';
-  var formContent = this._getFormContent(formName,formContent);
-  if (action.innerHTML === 'Cancel') document.forms[formName].style.display = 'none';
+  var formContent = this._getFormContent();
+  if (action.innerHTML === 'Cancel') document.forms[this.formName].style.display = 'none';
   else if (action.innerHTML === 'Save') {
-    var index = document.getElementById(formName).value;
+    var index = document.getElementById(this.formName).value;
     if (this._isValidate(formContent,index)) {
       this.store.setData(formContent,index);
       this._replaceElement(index,formContent);
       // reset form
-      document.forms[formName].style.display = 'none';
+      document.forms[this.formName].style.display = 'none';
     }
   } else 
     throw new Error('Illegal action: '+ action.innerHTML);
   
 };
 
-Table.prototype._getFormContent = function (formName) {
+Table.prototype._getFormContent = function () {
   var formContent ={}; 
+  var table = this;
   this.fields.forEach(function(field){
-    formContent[field] = document.forms[formName][field].value;
+    formContent[field] = document.forms[table.formName][field].value;
   });
   return formContent;
 };
@@ -132,7 +132,7 @@ Table.prototype._createButton = function (index) {
   modifyButton.classList.add('showFormClass','btn','btn-default','btn-xs');
   modifyButton.value = index;
   modifyButton.addEventListener('click', function () {
-    table.showModifyForm(this.value);
+    table.showForm(this.value);
   });
   var modifySpan = document.createElement('span');
   modifySpan.classList.add('glyphicon','glyphicon-pencil');
@@ -143,24 +143,21 @@ Table.prototype._createButton = function (index) {
   return tableField;
 };
 
-Table.prototype.showModifyForm = function (index) {
-  var form = document.getElementById('modifyForm');
-  form.style.display = 'block';
-  if (document.getElementById('insertForm').style.display === 'block') document.getElementById('insertForm').style.display = 'none';
-  var datas = this.store.getData();
-  this.fields.forEach(function(field){
-    form[field].value = datas[index][field];   
-  });
-  form.value = index;
-};
-
-Table.prototype.showInsertForm = function () {
-  var form = document.getElementById('insertForm');
-  if (form.style.display === 'block') form.style.display = 'none';
-  else {
-    if (document.getElementById('modifyForm').style.display === 'block') document.getElementById('modifyForm').style.display = 'none';
-    form.style.display = 'block';
+Table.prototype.showForm = function(index){
+  var form = document.getElementById('form');
+  if(!index){ // Insert
+    document.getElementById('modify_buttons').style.display = 'none';
+    document.getElementById('insert_buttons').style.display = 'block';
+  }else{ // Modify
+    document.getElementById('modify_buttons').style.display = 'block';
+    document.getElementById('insert_buttons').style.display = 'none';
+    var datas = this.store.getData();
+    this.fields.forEach(function(field){
+      form[field].value = datas[index][field];   
+    });
+    form.value = index; // record data's index for save
   }
+  form.style.display = 'block';
 };
 
 Table.prototype.showTable = function () {

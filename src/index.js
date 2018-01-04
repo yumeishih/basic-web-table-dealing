@@ -2,7 +2,7 @@ var Function = new Table();
 window.onload = Function.showTable();
 
 document.getElementById('showInsertForm').addEventListener('click', function () {
-  Function.showInsertForm(this);
+  Function.showForm();
 });
 
 document.getElementById('insertData').addEventListener('click', function () {

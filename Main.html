@@ -27,9 +27,7 @@
       <button id="showInsertForm" class="btn btn-sm showFormClass" value="insertForm"> <span class="glyphicon glyphicon-plus"></span> Insert</button>
   </div>
   <div id="showForm" class="col-md-4 row">
-    <form id="insertForm" method="post"> 
-      <h3>Insert</h3>
-      <p id="insertFormErrorMsg"></p>
+    <form id="form"> 
       <label for="name">Name: </label>
       <input type="text" class="form-control" id="name" value="">
       <label for="phone">Phone: </label>
@@ -37,23 +35,15 @@
       <label for="text"><span class="requiredItem">*</span>Email: </label>
       <input type="email" class="form-control" id="email" value="">
       <br>
-      <button id="insertData" type="button" class="btn btn-default btn-sm">Submit</button>
-      <button type="reset" class="btn btn-default btn-sm">Reset</button>
+      <div id="insert_buttons" class="formButtons">
+        <button id="insertData" type="button" class="btn btn-default btn-sm">Submit</button>
+        <button type="reset" class="btn btn-default btn-sm">Reset</button>
+      </div>
+      <div id="modify_buttons" class="formButtons">
+        <button type="button" class="btn btn-default btn-sm modifyDataClass">Save</button>
+        <button type="button" class="btn btn-default btn-sm modifyDataClass">Cancel</button>
+      </div>
     </form> 
-
-    <form id="modifyForm" method="post"> 
-      <h3>Modify</h3>
-      <p id="modifyFormErrorMsg"></p>
-      <label for="name">Name: </label>
-      <input type="text" class="form-control" id="name" value="">
-      <label for="phone">Phone: </label>
-      <input type="text" class="form-control" id="phone" value="">
-      <label for="email"><span class="requiredItem">*</span>Email: </label>
-      <input type="text" class="form-control" id="email" value="">
-      <br>
-      <button type="button" class="btn btn-default btn-sm modifyDataClass">Save</button>
-      <button type="button" class="btn btn-default btn-sm modifyDataClass">Cancel</button>
-    </form>
   </div>
 </div>
 <script type="text/javascript" src="src/store.js"></script>
