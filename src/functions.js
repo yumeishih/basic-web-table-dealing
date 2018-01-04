@@ -1,6 +1,6 @@
 function Table () {
   this.store = new Store();
-  this.fields = ['name','phone','email'];
+  this.fields = ['name', 'phone', 'email', ];
   this.formName = 'form';
 }
 
@@ -17,36 +17,36 @@ Table.prototype.insertData = function () {
 Table.prototype.modifyData = function () {
   var index = document.getElementById(this.formName).value;
   var formContent  = this._getFormContent();
-  if (this._isValidate(formContent,index)) {
-    this.store.setData(formContent,index);
-    this._replaceRow(index,formContent);
+  if (this._isValidate(formContent, index)) {
+    this.store.setData(formContent, index);
+    this._replaceRow(index, formContent);
     // reset form
     document.forms[this.formName].style.display = 'none';
   }
 };
 
 Table.prototype._getFormContent = function () {
-  var formContent ={}; 
+  var formContent = {}; 
   var table = this;
-  this.fields.forEach(function(field){
+  this.fields.forEach(function (field) {
     formContent[field] = document.forms[table.formName][field].value;
   });
   return formContent;
 };
 
-Table.prototype._isValidate = function (formContent,index) {
+Table.prototype._isValidate = function (formContent, index) {
   if (formContent.name === null || formContent.name === '') {
     alert(NAME_EMPTY_ALERT); 
     return false;
   } else {
     var datas = this.store.getData();
     var len = datas.length;
-    for (var i = 0; i<len; i++) {
+    for (var i = 0; i < len; i++) 
       if (i !== parseInt(index) && formContent.name === datas[i].name) {
         alert(USER_EXIST_ALERT); 
         return false;
       }
-    }
+    
   }
   if (formContent.email === null || formContent.email === '') {
     alert(EMAIL_EMPTY_ALERT); 
@@ -63,35 +63,35 @@ Table.prototype._isValidFormat = function (formContent) {
   };
   for (var key in formContent)
     if (!reg[key].test(formContent[key])) {
-      alert(WRONG_FORMAT+key);
+      alert(WRONG_FORMAT + key);
       return false;
     }
     
   return true;
 };
 
-Table.prototype._replaceRow = function (index,formContent) {
+Table.prototype._replaceRow = function (index, formContent) {
   var parent = document.getElementById('datasRow');
   var oldTableRow = document.getElementById('data' + index);
-  var newTableRow = this._createTableRow(index,formContent);
-  parent.replaceChild(newTableRow,oldTableRow);
+  var newTableRow = this._createTableRow(index, formContent);
+  parent.replaceChild(newTableRow, oldTableRow);
 };
 
 Table.prototype._appendRow = function (formContent) {
   var parent = document.getElementById('datasRow');
   var index = parent.childElementCount;
-  var tableRow = this._createTableRow(index,formContent);
+  var tableRow = this._createTableRow(index, formContent);
   parent.appendChild(tableRow);
 };
 
-Table.prototype._createTableRow = function (index,formContent) {
+Table.prototype._createTableRow = function (index, formContent) {
   var tableRow = document.createElement('tr');
-  tableRow.id = 'data'+index;
+  tableRow.id = 'data' + index;
   var tableIndex =  document.createElement('td');
-  tableIndex.textContent = parseInt(index)+1;
+  tableIndex.textContent = parseInt(index) + 1;
   tableRow.appendChild(tableIndex);
 
-  this.fields.forEach(function(field){
+  this.fields.forEach(function (field) {
     var tableField = document.createElement('td');
     tableField.textContent = formContent[field];
     tableRow.appendChild(tableField);
@@ -100,49 +100,49 @@ Table.prototype._createTableRow = function (index,formContent) {
   return tableRow; 
 };
 
-Table.prototype._createElement = function(type,props){
+Table.prototype._createElement = function (type, props) {
   var element = document.createElement(type);
-  for(attribute in props){
+  for (var attribute in props) 
     element[attribute] = props[attribute];
-  }
+  
   return element;
-}
+};
 
 Table.prototype._createActionTd = function (index) {
   var table = this;
-  //Delete Button
-  var deleteSpanProps ={
-    className:'glyphicon glyphicon-trash',
-    textContent: 'Delete'
-  }
-  var deleteSpan = this._createElement('span',deleteSpanProps);
+  // Delete Button
+  var deleteSpanProps = {
+    className: 'glyphicon glyphicon-trash',
+    textContent: 'Delete',
+  };
+  var deleteSpan = this._createElement('span', deleteSpanProps);
 
   var deleteBtnProps = {
-    type:'button',
-    id:'deleteDate',
+    type: 'button',
+    id: 'deleteDate',
     className: 'btn btn-default btn-xs',
-    value: index
+    value: index,
   };
-  var deleteButton = this._createElement('button',deleteBtnProps);
+  var deleteButton = this._createElement('button', deleteBtnProps);
   deleteButton.appendChild(deleteSpan);
-  deleteButton.addEventListener('click',function () {
+  deleteButton.addEventListener('click', function () {
     table.store.deleteData(index);
     window.location.reload();
   });
   // Modify Button
-  var modifySpanProps ={
-    className:'glyphicon glyphicon-pencil',
-    textContent: 'Modify'
-  }
-  var modifySpan = this._createElement('span',modifySpanProps);
+  var modifySpanProps = {
+    className: 'glyphicon glyphicon-pencil',
+    textContent: 'Modify',
+  };
+  var modifySpan = this._createElement('span', modifySpanProps);
 
   var modifyBtnProps = {
-    type:'button',
-    id:'showModifyForm',
+    type: 'button',
+    id: 'showModifyForm',
     className: 'btn btn-default btn-xs',
-    value: index
-  }
-  var modifyButton = this._createElement('button',modifyBtnProps);
+    value: index,
+  };
+  var modifyButton = this._createElement('button', modifyBtnProps);
   modifyButton.appendChild(modifySpan);
   modifyButton.addEventListener('click', function () {
     table.showForm(this.value);
@@ -155,17 +155,17 @@ Table.prototype._createActionTd = function (index) {
   return tableField;
 };
 
-Table.prototype.showForm = function(index){
+Table.prototype.showForm = function (index) {
   var form = document.getElementById('form');
-  if(!index){ // Insert
+  if (!index) { // Insert
     form.reset();
     document.getElementById('modify_buttons').style.display = 'none';
     document.getElementById('insert_buttons').style.display = 'block';
-  }else{ // Modify
+  } else { // Modify
     document.getElementById('modify_buttons').style.display = 'block';
     document.getElementById('insert_buttons').style.display = 'none';
     var datas = this.store.getData();
-    this.fields.forEach(function(field){
+    this.fields.forEach(function (field) {
       form[field].value = datas[index][field];   
     });
     form.value = index; // record data's index for save
@@ -175,27 +175,27 @@ Table.prototype.showForm = function(index){
 
 Table.prototype.showTable = function () {
   var datas = this.store.getData();
-  if (datas){
+  if (datas) {
     var dataCount = datas.length; 
     document.getElementById('datasRow').innerHTML = null;
-    for ( var i = 0;i<dataCount;i++) this._appendRow(datas[i]); 
+    for ( var i = 0;i < dataCount;i++) this._appendRow(datas[i]); 
   }
 };
 
 var window;
 if (typeof window === 'undefined') {
-  var document ={
-    forms:{
-      'modifyForm':{
-        style : {
+  var document = {
+    forms: {
+      'modifyForm': {
+        style: {
           display: 'none',
         },
       },
     },
-    getElementById : function () {
+    getElementById: function () {
       return {
-        value : 0,
-        reset : function () {},
+        value: 0,
+        reset: function () {},
       };
     },
   };
@@ -204,6 +204,6 @@ if (typeof window === 'undefined') {
       reload: function () {},
     },
   };
-  var alert = function(){};
+  var alert = function () {};
   module.exports = Table;
 }
