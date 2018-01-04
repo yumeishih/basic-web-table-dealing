@@ -1,4 +1,3 @@
-var storageName = 'RakutenDatas';
 var contentField = {
   name: '',
   phone: '',
@@ -7,32 +6,25 @@ var contentField = {
 var Function = new Table();
 
 function Table () {
+  this.store = new Store();
 }
 
 Table.prototype.insertData = function () {
   var formName = 'insertForm';
   var formContent  = this._getFormContent(formName);
-  if (localStorage.getItem(storageName) === null) {
-    var datasInit = [];
-    localStorage[storageName] = JSON.stringify(datasInit);
-  }
   if (this._isValidate(formContent)) {
-    var datas = JSON.parse(localStorage[storageName]);
-    var dataCount = datas.length; 
-    this._setDatas(dataCount,formContent);
-    this._appendElement(dataCount,formContent);
+    this.store.setData(formContent);
+    this._appendElement(formContent);
     // reset form
     document.getElementById(formName).reset();
   }
 };
-
+ 
 Table.prototype.deleteData = function (index) {
-  var datas = JSON.parse(localStorage[storageName]);
-  if (index >= datas.length) 
-    throw new Error('out of index!');
-  
+  var datas = this.store.getData();
+  if (index >= datas.length) throw new Error('out of index!');
   datas.splice(index, 1);
-  localStorage[storageName] = JSON.stringify(datas);
+  this.store.setData(datas);
   window.location.reload();
 };
 
@@ -43,7 +35,7 @@ Table.prototype.modifyData = function (action) {
   else if (action.innerHTML === 'Save') {
     var index = document.getElementById(formName).value;
     if (this._isValidate(formContent,index)) {
-      this._setDatas(index,formContent);
+      this.store.setData(formContent,index);
       this._replaceElement(index,formContent);
       // reset form
       document.forms[formName].style.display = 'none';
@@ -64,7 +56,7 @@ Table.prototype._isValidate = function (formContent,index) {
     this.alertMsg(0); // NAME_EMPTY_ALERT
     return false;
   } else {
-    var datas = JSON.parse(localStorage[storageName]);
+    var datas = this.store.getData();
     var len = datas.length;
     for (var i = 0; i<len; i++) {
       if (i === parseInt(index)) continue; 
@@ -96,13 +88,6 @@ Table.prototype._isValidFormat = function (formContent) {
   return true;
 };
 
-Table.prototype._setDatas = function (index,formContent) {
-  var datas = JSON.parse(localStorage[storageName]);
-  if (index === datas.length) datas[index] = contentField;
-  for (var k in contentField) datas[index][k] = formContent[k];
-  localStorage[storageName] = JSON.stringify(datas);
-};
-
 Table.prototype._replaceElement = function (index,formContent) {
   var parent = document.getElementById('datasRow');
   var child = document.getElementById('data' + index);
@@ -110,8 +95,9 @@ Table.prototype._replaceElement = function (index,formContent) {
   parent.replaceChild(tableRow,child);
 };
 
-Table.prototype._appendElement = function (index,formContent) {
+Table.prototype._appendElement = function (formContent) {
   var parent = document.getElementById('datasRow');
+  var index = parent.childElementCount;
   var tableRow = this._createElement(index,formContent);
   parent.appendChild(tableRow);
 };
@@ -172,7 +158,7 @@ Table.prototype.showModifyForm = function (index) {
   var form = document.getElementById('modifyForm');
   form.style.display = 'block';
   if (document.getElementById('insertForm').style.display === 'block') document.getElementById('insertForm').style.display = 'none';
-  var datas = JSON.parse(localStorage[storageName]);
+  var datas = this.store.getData();
   for (var k in contentField) form[k].value = datas[index][k];   
   form.value = index;
 };
@@ -187,12 +173,11 @@ Table.prototype.showInsertForm = function () {
 };
 
 Table.prototype.showTable = function () {
-  if (localStorage.getItem(storageName) === null);
-  else {
-    var datas = JSON.parse(localStorage[storageName]);
+  var datas = this.store.getData();
+  if (datas){
     var dataCount = datas.length; 
     document.getElementById('datasRow').innerHTML = null;
-    for ( var i = 0;i<dataCount;i++) this._appendElement(i,datas[i]); 
+    for ( var i = 0;i<dataCount;i++) this._appendElement(datas[i]); 
   }
 };
 
