@@ -8,4 +8,10 @@ form {
 
 div.formButtons{
     display:none;
+    float: left;
+   
+}
+#cancelButton{
+    margin-left: 4px;
+    float: left;
 }

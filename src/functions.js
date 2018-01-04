@@ -14,20 +14,15 @@ Table.prototype.insertData = function () {
   }
 };
 
-Table.prototype.modifyData = function (action) {
-  var formContent = this._getFormContent();
-  if (action.innerHTML === 'Cancel') document.forms[this.formName].style.display = 'none';
-  else if (action.innerHTML === 'Save') {
-    var index = document.getElementById(this.formName).value;
-    if (this._isValidate(formContent,index)) {
-      this.store.setData(formContent,index);
-      this._replaceElement(index,formContent);
-      // reset form
-      document.forms[this.formName].style.display = 'none';
-    }
-  } else 
-    throw new Error('Illegal action: '+ action.innerHTML);
-  
+Table.prototype.modifyData = function () {
+  var index = document.getElementById(this.formName).value;
+  var formContent  = this._getFormContent();
+  if (this._isValidate(formContent,index)) {
+    this.store.setData(formContent,index);
+    this._replaceElement(index,formContent);
+    // reset form
+    document.forms[this.formName].style.display = 'none';
+  }
 };
 
 Table.prototype._getFormContent = function () {

@@ -9,10 +9,11 @@ document.getElementById('insertData').addEventListener('click', function () {
   Function.insertData(this);
 });
 
-var modifyDataClassItems = document.getElementsByClassName('modifyDataClass');
-for (var i = 0;i<modifyDataClassItems.length; i++)
-  modifyDataClassItems[i].addEventListener('click', function () {
-    Function.modifyData(this);
-  });
+document.getElementById('modifyData').addEventListener('click', function () {
+  Function.modifyData(this);
+});
 
+document.getElementById('cancelButton').addEventListener('click', function () {
+  document.getElementById('form').style.display = 'none';
+});
 
