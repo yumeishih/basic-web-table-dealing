@@ -1,4 +1,4 @@
-var Table = require('../src/functions.js');
+var Table = require('../src/table.js');
 var Table = new Table();
 
 describe('Test',function(){
