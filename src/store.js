@@ -23,3 +23,4 @@ Store.prototype.deleteData = function (index) {
   datas.splice(index, 1);
   localStorage[this.storageName] = JSON.stringify(datas);
 };
+

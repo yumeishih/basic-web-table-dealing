@@ -1,3 +1,10 @@
+if(!window) var Store = function(){
+  this.deleteData = function(){};
+  this.setData = function(){};
+  this.getData = function(){};
+};
+
+
 function Table () {
   this.store = new Store();
   this.fields = ['name', 'phone', 'email', ];
@@ -186,7 +193,7 @@ var window;
 if (typeof window === 'undefined') {
   var document = {
     forms: {
-      'modifyForm': {
+      'form': {
         style: {
           display: 'none',
         },
@@ -200,10 +207,14 @@ if (typeof window === 'undefined') {
     },
   };
   window = {
-    location: {
-      reload: function () {},
-    },
+      location: {
+        reload: function () {},
+      },
   };
   var alert = function () {};
+  var NAME_EMPTY_ALERT = 'Name can not be empty!';
+  var USER_EXIST_ALERT = 'User already exist!';
+  var EMAIL_EMPTY_ALERT = 'Email can not be empty!';
+  var WRONG_FORMAT = 'Wrong Format: ';
   module.exports = Table;
 }

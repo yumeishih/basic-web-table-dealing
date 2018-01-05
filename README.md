@@ -30,21 +30,18 @@ Browser: http://localhost:8000/
 ---
 | Name | Description |Test|
 | ------ | ------ | ------ |
-| InsertData() ||:heavy_check_mark:|
-| DeleteData(index) ||:heavy_check_mark:|
-| ModifyData(action) ||:heavy_check_mark:|
-| _GetFormContent(formName) |||
+| insertData() ||:heavy_check_mark:|
+| modifyData() ||:heavy_check_mark:|
+| _GetFormContent() |||
 | _IsValidate(formContent,index) ||:heavy_check_mark:|
 | _IsValidFormat(formContent) ||:heavy_check_mark:|
-| _Setdatas(index,formContent) ||:heavy_check_mark:|
-| _ReplaceElement(index,formContent) |||
-| _AppendElement(index,formContent) |||
-| _CreateElement(index,formContent) |||
-| _CreateButton(index) |||
-| ShowModifyForm(index) |||
-| ShowInsertForm() |||
+| _replaceRow(index,formContent) |||
+| _appendRow(formContent) |||
+| _createTableRow(index,formContent) |||
+| _createElement(type,props) |||
+| _createActionTd(index) |||
+| showForm(index) |||
 | Showtable() |||
-| alertMsg(msgIndex,key) |||
 
 #### Testing
 ```sh
