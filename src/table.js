@@ -30,7 +30,7 @@ export default class Table{
   _getFormContent() {
     var formContent = {}; 
     var table = this;
-    this.fields.forEach(function (field) {
+    this.fields.forEach( field => {
       formContent[field] = document.forms[table.formName][field].value;
     });
     return formContent;
@@ -93,7 +93,7 @@ export default class Table{
     tableIndex.textContent = parseInt(index) + 1;
     tableRow.appendChild(tableIndex);
 
-    this.fields.forEach(function (field) {
+    this.fields.forEach( field => {
       var tableField = document.createElement('td');
       tableField.textContent = formContent[field];
       tableRow.appendChild(tableField);
@@ -127,10 +127,10 @@ export default class Table{
     };
     var deleteButton = this._createElement('button', deleteBtnProps);
     deleteButton.appendChild(deleteSpan);
-    deleteButton.addEventListener('click', function () {
+    deleteButton.addEventListener('click', function(){
       table.store.deleteData(index);
       window.location.reload();
-    });
+    })
     // Modify Button
     var modifySpanProps = {
       className: 'glyphicon glyphicon-pencil',
@@ -146,7 +146,7 @@ export default class Table{
     };
     var modifyButton = this._createElement('button', modifyBtnProps);
     modifyButton.appendChild(modifySpan);
-    modifyButton.addEventListener('click', function () {
+    modifyButton.addEventListener('click', function(){
       table.showForm(this.value);
     });
 
@@ -167,7 +167,7 @@ export default class Table{
     document.getElementById('modify_buttons').style.display = 'block';
     document.getElementById('insert_buttons').style.display = 'none';
     var datas = this.store.getData();
-    this.fields.forEach(function (field) {
+    this.fields.forEach( (field) => {
       form[field].value = datas[index][field];   
     });
     form.value = index; // record data's index for save
