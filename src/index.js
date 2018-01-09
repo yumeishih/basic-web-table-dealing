@@ -1,4 +1,6 @@
+import Table from './table'
 var Function = new Table();
+
 window.onload = Function.showTable();
 
 document.getElementById('showInsertForm').addEventListener('click', function () {

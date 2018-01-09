@@ -26,6 +26,11 @@ $ node server.js
 ```
 Browser: http://localhost:8000/
 
+Compiler:
+```sh
+$ npm run build
+```
+
 #### Functions List
 ---
 | Name | Description |Test|
