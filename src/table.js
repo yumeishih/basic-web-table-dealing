@@ -74,7 +74,7 @@ export default class Table{
 
   _replaceRow(index, formContent) {
     var parent = document.getElementById('datasRow');
-    var oldTableRow = document.getElementById('data' + index);
+    var oldTableRow = document.getElementById(`data${index}`);
     var newTableRow = this._createTableRow(index, formContent);
     parent.replaceChild(newTableRow, oldTableRow);
   }
@@ -88,7 +88,7 @@ export default class Table{
 
   _createTableRow(index, formContent) {
     var tableRow = document.createElement('tr');
-    tableRow.id = 'data' + index;
+    tableRow.id = `data${index}`;
     var tableIndex =  document.createElement('td');
     tableIndex.textContent = parseInt(index) + 1;
     tableRow.appendChild(tableIndex);
