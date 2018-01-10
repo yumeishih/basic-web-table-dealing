@@ -1,5 +1,5 @@
-export default class Store{
-  constructor(){
+export default class Store {
+  constructor() {
     this.storageName = 'RakutenDatas';
   }
   getData() {
@@ -7,16 +7,15 @@ export default class Store{
     return datas;
   }
   setData(formContent, index) {
-    let datas = this.getData();
+    const datas = this.getData();
     if (!index) { // Insert
-      index = datas.length;
       datas.push(formContent);
-    } else  // Modify
+    } else { // Modify
       datas[index] = formContent;
-    
+    }
     localStorage[this.storageName] = JSON.stringify(datas);
   }
-  
+
   deleteData(index) {
     const datas = this.getData();
     if (index >= datas.length) throw new Error('out of index!');
