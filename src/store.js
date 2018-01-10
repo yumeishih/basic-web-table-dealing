@@ -3,11 +3,11 @@ export default class Store{
     this.storageName = 'RakutenDatas';
   }
   getData() {
-    var datas = JSON.parse(localStorage[this.storageName]);
+    const datas = JSON.parse(localStorage[this.storageName]);
     return datas;
   }
   setData(formContent, index) {
-    var datas = this.getData();
+    let datas = this.getData();
     if (!index) { // Insert
       index = datas.length;
       datas.push(formContent);
@@ -18,7 +18,7 @@ export default class Store{
   }
   
   deleteData(index) {
-    var datas = this.getData();
+    const datas = this.getData();
     if (index >= datas.length) throw new Error('out of index!');
     datas.splice(index, 1);
     localStorage[this.storageName] = JSON.stringify(datas);
