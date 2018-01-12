@@ -1,4 +1,4 @@
-# RAKUTEN HOMEWORK
+# basic-web-table-dealing
 > Implement a simple website which maintain datas include insert, delete, and modify
 >
 > **Rule Require :**    
